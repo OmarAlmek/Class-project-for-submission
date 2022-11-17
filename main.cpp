@@ -6,7 +6,6 @@
 #include <QGraphicsPixmapItem>
 #include "player.h"
 #include "powerup.h"
-#include "powerup2.h"
 #include <QDir>
 #include <QDebug>
 #include <QImage>
@@ -119,9 +118,9 @@ int main(int argc, char *argv[])
     Player player(boardData);
     scene.addItem(&player);
 
-    Powerup1 powerup1, powerup2; // i made 2 different classes for powerup (banana), each class represents one banana
+    Powerup powerup1, powerup2;
     scene.addItem(&powerup1);
-    powerup2.setPos(50 + 7 * 50, 50 + 2 * 50);
+    powerup2.setPos(50 + 7 * 50, 50 + 2 * 50);// set position for second banana
     scene.addItem(&powerup2);
 
 
