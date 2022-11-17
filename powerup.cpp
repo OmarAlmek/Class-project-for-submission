@@ -1,6 +1,6 @@
 #include "powerup.h"
 
-Powerup1::Powerup1()
+Powerup::Powerup()
     {
         // Set Image
         QPixmap image("C:/Users/wifi/Downloads/My project(6).png");

@@ -9,7 +9,6 @@
 #include <QMediaPlayer>
 #include <QAudioOutput>
 #include "powerup.h"
-#include "powerup2.h"
 
 class Player : public QObject, public QGraphicsPixmapItem
 {

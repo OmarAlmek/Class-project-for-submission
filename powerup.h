@@ -2,11 +2,10 @@
 #define POWERUP_H
 
 #include <QGraphicsPixmapItem>
-class Powerup1 : public QGraphicsPixmapItem
+class Powerup : public QGraphicsPixmapItem
 {
 public:
-    Powerup1();
-
+    Powerup();
     int duration;
 };
 

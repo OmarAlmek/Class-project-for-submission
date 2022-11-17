@@ -88,13 +88,7 @@ void Player::keyPressEvent(QKeyEvent* event)
     QList<QGraphicsItem*> items = collidingItems();
         for (int i = 0; i < items.size(); i++)
         {
-            if (typeid(*items[i]) == typeid(Powerup1))
-                scene()->removeItem(items[i]);
-
-        }
-        for (int i = 0; i < items.size(); i++)
-        {
-            if (typeid(*items[i]) == typeid(Powerup2))
+            if (typeid(*items[i]) == typeid(Powerup))
                 scene()->removeItem(items[i]);
 
         }

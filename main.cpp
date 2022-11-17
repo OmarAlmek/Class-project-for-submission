@@ -119,11 +119,11 @@ int main(int argc, char *argv[])
     Player player(boardData);
     scene.addItem(&player);
 
-    Powerup1 powerup1; // i made 2 different classes for powerup (banana), each class represents one banana
+    Powerup1 powerup1, powerup2; // i made 2 different classes for powerup (banana), each class represents one banana
     scene.addItem(&powerup1);
-
-    Powerup2 powerup2;
+    powerup2.setPos(50 + 7 * 50, 50 + 2 * 50);
     scene.addItem(&powerup2);
+
 
     player.setFlag(QGraphicsPixmapItem::ItemIsFocusable);
     player.setFocus();
