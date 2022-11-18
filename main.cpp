@@ -6,6 +6,9 @@
 #include <QGraphicsPixmapItem>
 #include "player.h"
 #include "powerup.h"
+#include "enemy.h"
+#include "health.h"
+#include "bullet.h"
 #include <QDir>
 #include <QDebug>
 #include <QImage>
@@ -18,7 +21,7 @@ int main(int argc, char *argv[])
     QGraphicsView view;
     QGraphicsScene scene;
 
-    view.setFixedSize(750, 650);
+    view.setFixedSize(800, 700);
     view.setWindowTitle("GTA");
     QBrush brush(Qt::black);
     view.setBackgroundBrush(brush);
@@ -26,39 +29,39 @@ int main(int argc, char *argv[])
     QFile file("C:/Users/wifi/OneDrive/Documents/projectresourse/map.txt"); // parse the text file
     file.open(QIODevice::ReadOnly);
     QTextStream stream(&file);
-    int boardData[10][15];
+    int boardData[12][12];
     QString temp;
-    for (int i = 0; i < 10; i++)
-        for (int j = 0; j < 15; j++)
+    for (int i = 0; i < 12; i++)
+        for (int j = 0; j < 12; j++)
         {
             stream >> temp;
             boardData[i][j] = temp.toInt();
         }
 
-    QPixmap roadImage("C:/Users/wifi/OneDrive/Documents/projectresourse/road_0.png"); // create road image object
+    QPixmap roadImage("C:/Users/wifi/OneDrive/Documents/projectresourse/road.png"); // create road image object
     QTransform tr; // qtransform object just to rotate the road 90 degrees , was too lazy to rotate it using another app
         tr.rotate(90);
        roadImage = roadImage.transformed(tr);
-    roadImage = roadImage.scaledToWidth(65);
-    roadImage = roadImage.scaledToHeight(75);
+    roadImage = roadImage.scaledToWidth(60);
+    roadImage = roadImage.scaledToHeight(60);
 
-    QPixmap carsImage("C:/Users/wifi/Downloads/My project(5).png"); // create car image object
+    QPixmap carsImage("C:/Users/wifi/OneDrive/Documents/projectresourse/car2.png"); // create car image object
       carsImage = carsImage.transformed(tr);
-    carsImage= carsImage.scaledToWidth(50);
-    carsImage= carsImage.scaledToHeight(50);
+    carsImage= carsImage.scaledToWidth(60);
+    carsImage= carsImage.scaledToHeight(60);
 
 
     QPixmap buildingImage1("C:/Users/wifi/Downloads/Spritesheet_adobe_express.png"); // create building object
-    buildingImage1 = buildingImage1.scaledToWidth(100);
+    buildingImage1 = buildingImage1.scaledToWidth(50);
      buildingImage1 = buildingImage1.scaledToHeight(50);
 
      QPixmap buildingImage2("C:/Users/wifi/Downloads/Spritesheet_adobe_express(1).png"); // create another building object
-     buildingImage2 = buildingImage2.scaledToWidth(100);
+     buildingImage2 = buildingImage2.scaledToWidth(50);
       buildingImage2 = buildingImage2.scaledToHeight(50);
 
       QPixmap pavementImage("C:/Users/wifi/Downloads/363170d5530e4dff3732c9fac51db744--pixel-art-indie-games_adobe_express.jpeg"); // create pavement object, next to the buildings at the top of the board
-      pavementImage = pavementImage.scaledToWidth(150);
-      pavementImage = pavementImage.scaledToHeight(85);
+      pavementImage = pavementImage.scaledToWidth(50);
+      pavementImage = pavementImage.scaledToHeight(50);
 
     QPixmap houseImage("C:/Users/wifi/OneDrive/Documents/projectresourse/house1.png"); // house object
     houseImage = houseImage.scaledToWidth(50);
@@ -67,12 +70,12 @@ int main(int argc, char *argv[])
     grassImage = grassImage.scaledToWidth(50);
     grassImage = grassImage.scaledToHeight(50);
 
-    QGraphicsPixmapItem boardItems[10][15]; // creating board
-    for (int i = 0; i < 10; i++)
-        for (int j = 0; j < 15; j++)
+    QGraphicsPixmapItem boardItems[12][12]; // creating board
+    for (int i = 0; i < 12; i++)
+        for (int j = 0; j < 12; j++)
         {
             // Set Image
-            if ((boardData[i][j] == -1 && !(i > 6)) || (boardData[i][j] == -1 && (i == 6)))
+            if (boardData[i][j] == -1)
                 boardItems[i][j].setPixmap(roadImage); // set road position
             else if(i == 6 && j == 4){
                 boardItems[i][j].setPixmap(houseImage); //set house image position
@@ -122,6 +125,28 @@ int main(int argc, char *argv[])
     scene.addItem(&powerup1);
     powerup2.setPos(50 + 7 * 50, 50 + 2 * 50);// set position for second banana
     scene.addItem(&powerup2);
+
+    Health *heart1= new Health;
+    Health *heart2= new Health;
+    Health *heart3= new Health;
+    heart2->setPos(50 + 2 * 50, 50 + 13 * 50);
+    heart3->setPos(50 + 3 * 50, 50 + 13 * 50);
+    scene.addItem(heart1);
+    scene.addItem(heart2);
+    scene.addItem(heart3);
+
+Bullet bullet1, bullet2, bullet3, bullet4;
+bullet2.setPos(50 + 10 * 50, 50 + 1 * 50);
+bullet3.setPos(50 +  1 * 50, 50 + 10 * 50);
+bullet4.setPos(50 +  10 * 50, 50 + 10 * 50);
+  scene.addItem(&bullet1);
+  scene.addItem(&bullet2);
+  scene.addItem(&bullet3);
+   scene.addItem(&bullet4);
+
+    Enemy enemy1(boardData);
+    scene.addItem(&enemy1);
+
 
 
     player.setFlag(QGraphicsPixmapItem::ItemIsFocusable);

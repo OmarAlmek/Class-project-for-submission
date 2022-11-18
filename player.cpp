@@ -1,7 +1,7 @@
 #include "player.h"
 
 
-Player::Player(int boardData[10][15])
+Player::Player(int boardData[12][12])
 {
     // Set Image
     QPixmap image("C:/Users/wifi/Downloads/My project-1(1).png");
@@ -15,11 +15,9 @@ Player::Player(int boardData[10][15])
     setPos(50 + column * 50, 50 + row * 50);
 
     // Set data Array
-    for (int i = 0; i < 10; i++)
-        for (int j = 0; j < 15; j++)
+    for (int i = 0; i < 12; i++)
+        for (int j = 0; j < 12; j++)
             data[i][j] = boardData[i][j];
-    //set health
-    health = 3;
 
 
 //set music theme
@@ -92,5 +90,12 @@ void Player::keyPressEvent(QKeyEvent* event)
                 scene()->removeItem(items[i]);
 
         }
+     QList<QGraphicsItem*> bullets = collidingItems();
+            for (int i = 0; i < bullets.size(); i++)
+            {
+                if (typeid(*bullets[i]) == typeid(Bullet))
+                    scene()->removeItem(bullets[i]);
 
-}
+            }
+        }
+
