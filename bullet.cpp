@@ -3,7 +3,7 @@
 Bullet::Bullet()
 {
     QPixmap image("C:/Users/wifi/OneDrive/Documents/projectresourse/bullet.png");
-    image = image.scaledToWidth(30);
+    image = image.scaledToWidth(40);
     image = image.scaledToHeight(30);
     setPixmap(image);
 

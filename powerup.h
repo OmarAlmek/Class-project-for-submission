@@ -2,6 +2,7 @@
 #define POWERUP_H
 
 #include <QGraphicsPixmapItem>
+
 class Powerup : public QGraphicsPixmapItem
 {
 public:

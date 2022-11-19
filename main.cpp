@@ -7,6 +7,7 @@
 #include "player.h"
 #include "powerup.h"
 #include "enemy.h"
+#include "enemy2.h"
 #include "health.h"
 #include "bullet.h"
 #include <QDir>
@@ -69,6 +70,9 @@ int main(int argc, char *argv[])
     QPixmap grassImage("C:/Users/wifi/OneDrive/Documents/projectresourse/grass (2).png"); // grass object
     grassImage = grassImage.scaledToWidth(50);
     grassImage = grassImage.scaledToHeight(50);
+    QPixmap treeImage("C:/Users/wifi/OneDrive/Documents/projectresourse/tree.png"); // tree object
+    treeImage = treeImage.scaledToWidth(50);
+    treeImage = treeImage.scaledToHeight(50);
 
     QGraphicsPixmapItem boardItems[12][12]; // creating board
     for (int i = 0; i < 12; i++)
@@ -89,6 +93,9 @@ int main(int argc, char *argv[])
             }
             else if(i ==7 && j == 5){
                 boardItems[i][j].setPixmap(grassImage); // set grass around house
+            }
+            else if(boardData[i][j]== -7){
+                boardItems[i][j].setPixmap(treeImage);
             }
 
             else if(boardData[i][j]== -2){
@@ -126,14 +133,7 @@ int main(int argc, char *argv[])
     powerup2.setPos(50 + 7 * 50, 50 + 2 * 50);// set position for second banana
     scene.addItem(&powerup2);
 
-    Health *heart1= new Health;
-    Health *heart2= new Health;
-    Health *heart3= new Health;
-    heart2->setPos(50 + 2 * 50, 50 + 13 * 50);
-    heart3->setPos(50 + 3 * 50, 50 + 13 * 50);
-    scene.addItem(heart1);
-    scene.addItem(heart2);
-    scene.addItem(heart3);
+
 
 Bullet bullet1, bullet2, bullet3, bullet4;
 bullet2.setPos(50 + 10 * 50, 50 + 1 * 50);
@@ -142,12 +142,46 @@ bullet4.setPos(50 +  10 * 50, 50 + 10 * 50);
   scene.addItem(&bullet1);
   scene.addItem(&bullet2);
   scene.addItem(&bullet3);
-   scene.addItem(&bullet4);
+  scene.addItem(&bullet4);
 
-    Enemy enemy1(boardData);
+
+   Health heart1, heart2, heart3;
+   heart1.setPos(50 +0 * 50, 50 + 13 * 50 );
+   heart2.setPos(50 + 1 * 50, 50 + 13 * 50);
+   heart3.setPos(50 + 2 * 50, 50 + 13 * 50);
+   scene.addItem(&heart1);
+   scene.addItem(&heart2);
+   scene.addItem(&heart3);
+
+   while (player.getstatus() == true && player.getcol() == true) {
+       int hp= player.gethealth();
+       switch (hp){
+       case 3:
+           scene.removeItem(&heart3);
+           player.fixcol();
+           break;
+       case 2:
+           scene.removeItem(&heart2);
+           player.fixcol();
+           break;
+       case 1:
+           scene.removeItem(&heart1);
+            player.setstatus();
+       default:
+           break;
+       }
+}
+
+
+
+    Enemy1 enemy1(boardData);
+    Enemy2 enemy2(boardData);
+    enemy2.setPos(50 +5* 50, 50 + 10 * 50);
     scene.addItem(&enemy1);
+    scene.addItem(&enemy2);
 
-
+    if ((player.pos()== enemy1.pos()|| player.pos()== enemy2.pos()) && player.gethealth() == 2)
+    scene.removeItem(&heart3);
 
     player.setFlag(QGraphicsPixmapItem::ItemIsFocusable);
     player.setFocus();

@@ -3,29 +3,31 @@
 
 Player::Player(int boardData[12][12])
 {
+
+    health = 3;
+    collision = false;
     // Set Image
     QPixmap image("C:/Users/wifi/Downloads/My project-1(1).png");
     image = image.scaledToWidth(50);
     image = image.scaledToHeight(50);
     setPixmap(image);
-
     // Set Position
     row = 4;
     column = 5;
     setPos(50 + column * 50, 50 + row * 50);
+
+    timer = new QTimer;
 
     // Set data Array
     for (int i = 0; i < 12; i++)
         for (int j = 0; j < 12; j++)
             data[i][j] = boardData[i][j];
 
-
 //set music theme
     music->setSource(QUrl::fromLocalFile("C:/Users/wifi/Downloads/Mission Impossible Theme (Full Theme).mp3"));
     musicaudio->setVolume(5);
     music->setAudioOutput(musicaudio);
     music->play();
-
 }
 void Player::keyPressEvent(QKeyEvent* event)
 {  QMediaPlayer *player = new QMediaPlayer;
@@ -83,19 +85,62 @@ void Player::keyPressEvent(QKeyEvent* event)
     }
     setPos(50 + column * 50, 50 + row * 50);
 
+    //power up
     QList<QGraphicsItem*> items = collidingItems();
         for (int i = 0; i < items.size(); i++)
         {
-            if (typeid(*items[i]) == typeid(Powerup))
+            if (typeid(*items[i]) == typeid(Powerup)){
                 scene()->removeItem(items[i]);
+                connect(timer, SIGNAL(timeout()),this, SLOT(empower()));
+                timer->start(10);
 
-        }
+                }
+            }
+        //losing health when touching enemy
+    QList<QGraphicsItem*> enemies = collidingItems();
+         for (int i = 0; i < enemies.size(); i++)
+            {
+                if (typeid(*enemies[i]) == typeid(Enemy1) || typeid(*enemies[i])== typeid(Enemy2)){
+                    health= decreasehealth();
+                    collide();
+                }
+
+            }
+            //bullets disappearing when player touches them
      QList<QGraphicsItem*> bullets = collidingItems();
             for (int i = 0; i < bullets.size(); i++)
             {
                 if (typeid(*bullets[i]) == typeid(Bullet))
                     scene()->removeItem(bullets[i]);
-
             }
         }
 
+void Player::empower(){
+    QPixmap image ("C:/Users/wifi/OneDrive/Documents/projectresourse/nerdbuff.png");
+    image = image.scaledToWidth(50);
+    image = image.scaledToHeight(50);
+    setPixmap(image);
+
+}
+
+int Player::gethealth(){
+    return health;
+}
+bool Player::getstatus(){
+    return alive;
+}
+void Player::setstatus(){
+    alive = false;
+}
+int Player::decreasehealth(){
+    return --health;
+}
+bool Player::getcol(){
+    return collision;
+}
+void Player::fixcol(){
+    this->collision = false;
+}
+void Player::collide(){
+    this->collision = true;
+}

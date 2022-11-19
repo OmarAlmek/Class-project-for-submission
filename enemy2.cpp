@@ -1,6 +1,6 @@
-#include "enemy.h"
+#include "enemy2.h"
 
-Enemy1::Enemy1(int boardData[12][12])
+Enemy2::Enemy2(int boardData[12][12])
 {
     // Set Image
     QPixmap image("C:/Users/wifi/OneDrive/Documents/projectresourse/enemy.png");

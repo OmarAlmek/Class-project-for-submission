@@ -1,5 +1,5 @@
-#ifndef ENEMY_H
-#define ENEMY_H
+#ifndef ENEMY2_H
+#define ENEMY2_H
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
 #include <QKeyEvent>
@@ -8,14 +8,14 @@
 #include <QMediaPlayer>
 #include <QAudioOutput>
 
-class Enemy1: public QObject, public QGraphicsPixmapItem
+class Enemy2: public QObject, public QGraphicsPixmapItem
 {
 private:
     int row, column;
     int data[12][12];
     int health;
 public:
-    Enemy1(int boardData[12][12]);
+    Enemy2(int boardData[12][12]);
 };
 
 #endif // ENEMY_H
