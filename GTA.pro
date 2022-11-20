@@ -18,7 +18,8 @@ SOURCES += \
     health.cpp \
     main.cpp \
     player.cpp \
-    powerup.cpp
+    powerup.cpp \
+    win.cpp
 
 HEADERS += \
     bullet.h \
@@ -26,10 +27,12 @@ HEADERS += \
     enemy2.h \
     health.h \
     player.h \
-    powerup.h
+    powerup.h \
+    win.h
 
 FORMS += \
-    player.ui
+    player.ui \
+    win.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

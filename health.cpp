@@ -3,7 +3,6 @@
 
 Health::Health()
 {
-    health =3;
 // set picture
     QPixmap image("C:/Users/wifi/OneDrive/Documents/projectresourse/heart.png");
     image = image.scaledToWidth(40);
@@ -13,11 +12,3 @@ Health::Health()
     // Set Position
     setPos(50 + 1 * 50, 50 + 13 * 50);
 }
-
-void Health::decrease(){
-    health--;
-}
-int Health::gethealth(){
-    return health;
-}
-

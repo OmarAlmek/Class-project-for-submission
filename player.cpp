@@ -1,11 +1,12 @@
 #include "player.h"
+#include <QDebug>
 
 
-Player::Player(int boardData[12][12])
+Player::Player(int boardData[12][12], Enemy1* ptrenemy1, Enemy2 *ptrenemy2, Powerup* fptr, QGraphicsScene *sptrr , Health* hptr1,Health* hptr2, Health* hptr3,QGraphicsView *vptr, Win *win1)
 {
-
     health = 3;
-    collision = false;
+    collision = new bool;
+    *collision = false;
     // Set Image
     QPixmap image("C:/Users/wifi/Downloads/My project-1(1).png");
     image = image.scaledToWidth(50);
@@ -15,6 +16,15 @@ Player::Player(int boardData[12][12])
     row = 4;
     column = 5;
     setPos(50 + column * 50, 50 + row * 50);
+        sptr = sptrr;
+        htprr1 =hptr1;
+        htprr2 = hptr2;
+        htprr3 = hptr3;
+        enemy1 = ptrenemy1;
+        enemy2 = ptrenemy2;
+        this->win1= win1;
+        this->vptr= vptr;
+
 
     timer = new QTimer;
 
@@ -28,7 +38,8 @@ Player::Player(int boardData[12][12])
     musicaudio->setVolume(5);
     music->setAudioOutput(musicaudio);
     music->play();
-}
+
+   }
 void Player::keyPressEvent(QKeyEvent* event)
 {  QMediaPlayer *player = new QMediaPlayer;
      QAudioOutput *audioOutput = new QAudioOutput;
@@ -93,7 +104,6 @@ void Player::keyPressEvent(QKeyEvent* event)
                 scene()->removeItem(items[i]);
                 connect(timer, SIGNAL(timeout()),this, SLOT(empower()));
                 timer->start(10);
-
                 }
             }
         //losing health when touching enemy
@@ -101,26 +111,58 @@ void Player::keyPressEvent(QKeyEvent* event)
          for (int i = 0; i < enemies.size(); i++)
             {
                 if (typeid(*enemies[i]) == typeid(Enemy1) || typeid(*enemies[i])== typeid(Enemy2)){
-                    health= decreasehealth();
+
+                    sethealth(decreasehealth());
                     collide();
+                          if (health==2)
+                               {
+                                   sptr->removeItem(htprr3);
+                               }
+
+                          else  if (health == 1)
+                               {
+                                   sptr->removeItem(htprr2);
+                               }
+                          else {
+                              sptr->removeItem(htprr1);
+                              QPixmap image("C:/Users/wifi/OneDrive/Documents/GTA/projectresourse/nerddead.png");
+                              image= image.scaledToWidth(50);
+                              image= image.scaledToHeight(50);
+                          setPixmap(image);
+                          }
                 }
 
             }
+
+QList<QGraphicsItem*> bullets = collidingItems();
+       for (int i = 0; i < bullets.size(); i++)
+       {
+           if (typeid(*bullets[i]) == typeid(Bullet)){
+               scene()->removeItem(bullets[i]);
+               if(enemy1->gethealth()!=1)
+                    enemy1->losehealth();
+               else sptr->removeItem(enemy1);}
+           if (typeid(*bullets[i])== typeid(Bullet)){
+                   scene()->removeItem(bullets[i]);
+                   if(enemy2->gethealth()!=1)
+                       enemy2->losehealth();
+                   else sptr ->removeItem(enemy2);}
+           if (enemy1->gethealth()==0 && enemy2->gethealth()==0){
+               win1->show();}
+           }
+
+
+
+         }
             //bullets disappearing when player touches them
-     QList<QGraphicsItem*> bullets = collidingItems();
-            for (int i = 0; i < bullets.size(); i++)
-            {
-                if (typeid(*bullets[i]) == typeid(Bullet))
-                    scene()->removeItem(bullets[i]);
-            }
-        }
+
 
 void Player::empower(){
     QPixmap image ("C:/Users/wifi/OneDrive/Documents/projectresourse/nerdbuff.png");
     image = image.scaledToWidth(50);
     image = image.scaledToHeight(50);
     setPixmap(image);
-
+     count++;
 }
 
 int Player::gethealth(){
@@ -135,12 +177,15 @@ void Player::setstatus(){
 int Player::decreasehealth(){
     return --health;
 }
-bool Player::getcol(){
+bool* Player::getcol(){
     return collision;
 }
 void Player::fixcol(){
-    this->collision = false;
+    *collision = false;
 }
 void Player::collide(){
-    this->collision = true;
+    *collision = true;
+}
+void Player::sethealth(int hp){
+    health = hp;
 }

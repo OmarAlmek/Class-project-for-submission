@@ -15,12 +15,11 @@
 #include <QImage>
 #include <QMediaPlayer>
 
-
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     QGraphicsView view;
-    QGraphicsScene scene;
+    QGraphicsScene *scene= new QGraphicsScene;
 
     view.setFixedSize(800, 700);
     view.setWindowTitle("GTA");
@@ -122,16 +121,14 @@ int main(int argc, char *argv[])
             boardItems[i][j].setPos(50 + j * 50, 50 + i * 50);
 
             // Add to the Scene
-            scene.addItem(&boardItems[i][j]);
+            scene->addItem(&boardItems[i][j]);
         }
 
-    Player player(boardData);
-    scene.addItem(&player);
 
     Powerup powerup1, powerup2;
-    scene.addItem(&powerup1);
+    scene->addItem(&powerup1);
     powerup2.setPos(50 + 7 * 50, 50 + 2 * 50);// set position for second banana
-    scene.addItem(&powerup2);
+    scene->addItem(&powerup2);
 
 
 
@@ -139,54 +136,57 @@ Bullet bullet1, bullet2, bullet3, bullet4;
 bullet2.setPos(50 + 10 * 50, 50 + 1 * 50);
 bullet3.setPos(50 +  1 * 50, 50 + 10 * 50);
 bullet4.setPos(50 +  10 * 50, 50 + 10 * 50);
-  scene.addItem(&bullet1);
-  scene.addItem(&bullet2);
-  scene.addItem(&bullet3);
-  scene.addItem(&bullet4);
+  scene->addItem(&bullet1);
+  scene->addItem(&bullet2);
+  scene->addItem(&bullet3);
+  scene->addItem(&bullet4);
 
 
    Health heart1, heart2, heart3;
    heart1.setPos(50 +0 * 50, 50 + 13 * 50 );
    heart2.setPos(50 + 1 * 50, 50 + 13 * 50);
    heart3.setPos(50 + 2 * 50, 50 + 13 * 50);
-   scene.addItem(&heart1);
-   scene.addItem(&heart2);
-   scene.addItem(&heart3);
+   scene->addItem(&heart1);
+   scene->addItem(&heart2);
+   scene->addItem(&heart3);
 
-   while (player.getstatus() == true && player.getcol() == true) {
-       int hp= player.gethealth();
-       switch (hp){
-       case 3:
-           scene.removeItem(&heart3);
-           player.fixcol();
-           break;
-       case 2:
-           scene.removeItem(&heart2);
-           player.fixcol();
-           break;
-       case 1:
-           scene.removeItem(&heart1);
-            player.setstatus();
-       default:
-           break;
-       }
-}
+
+
+//   while (player.getstatus() == true && *player.getcol() == true) {
+//       switch (player.gethealth()){
+//       case 3:
+//           scene.removeItem(&heart3);
+//      player.fixcol();
+//           break;
+//       case 2:
+//           scene.removeItem(&heart2);
+//           player.fixcol();
+//           break;
+//       case 1:
+//           scene.removeItem(&heart1);
+//            player.setstatus();
+//       default:
+//           break;
+//       }
+//}
 
 
 
     Enemy1 enemy1(boardData);
     Enemy2 enemy2(boardData);
     enemy2.setPos(50 +5* 50, 50 + 10 * 50);
-    scene.addItem(&enemy1);
-    scene.addItem(&enemy2);
+    scene->addItem(&enemy1);
+    scene->addItem(&enemy2);
 
-    if ((player.pos()== enemy1.pos()|| player.pos()== enemy2.pos()) && player.gethealth() == 2)
-    scene.removeItem(&heart3);
+ Win *winscreen = new Win(&view, scene);
+
+    Player player(boardData, &enemy1, &enemy2, &powerup1, scene, &heart1, &heart2, &heart3, view, winscreen);
+    scene->addItem(&player);
 
     player.setFlag(QGraphicsPixmapItem::ItemIsFocusable);
     player.setFocus();
 
-    view.setScene(&scene);
+    view.setScene(scene);
     view.show();
     return a.exec();
 }

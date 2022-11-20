@@ -2,6 +2,9 @@
 
 Enemy2::Enemy2(int boardData[12][12])
 {
+    timerenemy= new QTimer(this);
+       connect(timerenemy,SIGNAL(timeout()), this,SLOT(movingenemy()));
+       timerenemy->start(500);
     // Set Image
     QPixmap image("C:/Users/wifi/OneDrive/Documents/projectresourse/enemy.png");
     image = image.scaledToWidth(50);
@@ -19,4 +22,39 @@ Enemy2::Enemy2(int boardData[12][12])
             data[i][j] = boardData[i][j];
     //set health
     health = 2;
+}
+void Enemy2::movingenemy ()
+{
+        int n = rand()%4;
+
+        if (n==0 && data[row-1][column]>=0)
+        {
+            row--;// this is not setting a position
+             setPos(50+(50*column),50+(50*row));
+            // connect(timertom,SIGNAL(timeout()), this,SLOT(dt()) );
+        }
+            else if (n==1 && data[row+1][column]>=0)
+        {
+            row++;
+              setPos(50+(50*column),50+(50*row));
+                 //connect(timertom,SIGNAL(timeout()), this,SLOT(ut()) );
+        }
+        else if ((n==2 )&& (data[row][column+1]>=0))
+     {
+            column++;
+           setPos(50+(50*column),50+(50*row));
+              //connect(timertom,SIGNAL(timeout()), this,SLOT(rt()) );
+     }
+     else if ( n ==3 &&data[row][column-1]>=0)
+    {
+         column--;
+          setPos(50+(50*column),50+(50*row));
+             //connect(timertom,SIGNAL(timeout()), this,SLOT(lt()) );
+    }
+}
+void Enemy2::losehealth(){
+    health--;
+}
+int Enemy2::gethealth(){
+    return health;
 }
