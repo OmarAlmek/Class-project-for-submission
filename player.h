@@ -9,6 +9,7 @@
 #include <QMediaPlayer>
 #include <QAudioOutput>
 #include <QTimer>
+#include <QElapsedTimer>
 #include "health.h"
 #include <unistd.h>
 #include "powerup.h"
@@ -16,6 +17,8 @@
 #include "bullet.h"
 #include "enemy2.h"
 #include "health.h"
+#include <QTime>
+
 #include"win.h"
 
 
@@ -38,9 +41,13 @@ private:
     QMediaPlayer * music = new QMediaPlayer();
     QAudioOutput * musicaudio = new QAudioOutput();
     QTimer *timer;
-    Win *win1;
+    QTimer *t;
+    QTimer *t2;
+    QTimer *collisiontimer;
+    QElapsedTimer elap;
+    //Win *win1;
 public:
-    Player(int boardData[12][12], Enemy1* ptrenemy1, Enemy2* ptrenemy2, Powerup* fptr, QGraphicsScene *sptrr , Health* hptr1,Health* hptr2, Health* hptr3,QGraphicsView *vptr, Win *win1);
+    Player(int boardData[12][12], Enemy1* ptrenemy1, Enemy2* ptrenemy2, Powerup* fptr, QGraphicsScene *sptrr , Health* hptr1,Health* hptr2, Health* hptr3,QGraphicsView *viewptr);
     int gethealth();
     bool getstatus();
     void setstatus();
@@ -49,12 +56,17 @@ public:
     void fixcol();
     void collide();
     void sethealth(int hp);
+    void time();
+void reset();
 
 
 
 public slots:
     void keyPressEvent(QKeyEvent* event);
     void empower();
+    void incre();
+    void nopower();
+
 
 };
 

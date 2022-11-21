@@ -18,13 +18,13 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    QGraphicsView view;
+    QGraphicsView *view= new QGraphicsView;
     QGraphicsScene *scene= new QGraphicsScene;
 
-    view.setFixedSize(800, 700);
-    view.setWindowTitle("GTA");
+    view->setFixedSize(800, 700);
+    view->setWindowTitle("GTA");
     QBrush brush(Qt::black);
-    view.setBackgroundBrush(brush);
+    view->setBackgroundBrush(brush);
 
     QFile file("C:/Users/wifi/OneDrive/Documents/projectresourse/map.txt"); // parse the text file
     file.open(QIODevice::ReadOnly);
@@ -178,15 +178,15 @@ bullet4.setPos(50 +  10 * 50, 50 + 10 * 50);
     scene->addItem(&enemy1);
     scene->addItem(&enemy2);
 
- Win *winscreen = new Win(&view, scene);
+// Win *winscreen = new Win(&view, scene);
 
-    Player player(boardData, &enemy1, &enemy2, &powerup1, scene, &heart1, &heart2, &heart3, view, winscreen);
+    Player player(boardData, &enemy1, &enemy2, &powerup1, scene, &heart1, &heart2, &heart3, view);
     scene->addItem(&player);
 
     player.setFlag(QGraphicsPixmapItem::ItemIsFocusable);
     player.setFocus();
 
-    view.setScene(scene);
-    view.show();
+    view->setScene(scene);
+    view->show();
     return a.exec();
 }

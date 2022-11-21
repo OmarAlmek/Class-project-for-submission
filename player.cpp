@@ -1,8 +1,9 @@
 #include "player.h"
+#include "qobjectdefs.h"
 #include <QDebug>
 
 
-Player::Player(int boardData[12][12], Enemy1* ptrenemy1, Enemy2 *ptrenemy2, Powerup* fptr, QGraphicsScene *sptrr , Health* hptr1,Health* hptr2, Health* hptr3,QGraphicsView *vptr, Win *win1)
+Player::Player(int boardData[12][12], Enemy1* ptrenemy1, Enemy2 *ptrenemy2, Powerup* fptr, QGraphicsScene *sptrr , Health* hptr1,Health* hptr2, Health* hptr3,QGraphicsView *viewptr)
 {
     health = 3;
     collision = new bool;
@@ -22,16 +23,17 @@ Player::Player(int boardData[12][12], Enemy1* ptrenemy1, Enemy2 *ptrenemy2, Powe
         htprr3 = hptr3;
         enemy1 = ptrenemy1;
         enemy2 = ptrenemy2;
-        this->win1= win1;
-        this->vptr= vptr;
-
-
-    timer = new QTimer;
+       // this->win1= win1;
+        vptr= viewptr;
 
     // Set data Array
     for (int i = 0; i < 12; i++)
         for (int j = 0; j < 12; j++)
             data[i][j] = boardData[i][j];
+    //set timer
+    timer = new QTimer(this);
+t= new QTimer(this);
+t2= new QTimer(this);
 
 //set music theme
     music->setSource(QUrl::fromLocalFile("C:/Users/wifi/Downloads/Mission Impossible Theme (Full Theme).mp3"));
@@ -66,13 +68,14 @@ void Player::keyPressEvent(QKeyEvent* event)
     }
     else if (event->key() == Qt::Key_Right && data[row][column + 1] >= 0)
     { // changing character model when moving to right
-        QPixmap image("C:/Users/wifi/Downloads/My project-1(1).png");
+        if (powered != true){
+            QPixmap image("C:/Users/wifi/Downloads/My project-1(1).png");
         image = image.scaledToWidth(50);
         image = image.scaledToHeight(50);
         QTransform tr;
             tr.scale(1, 1);
           image= image.transformed(tr);
-           setPixmap(image);
+           setPixmap(image);}
            player->setAudioOutput(audioOutput);
            player->setSource(QUrl::fromLocalFile("C:/Users/wifi/OneDrive/Documents/projectresourse/sound/wet-metal-footsteps-32703 (mp3cut.net).mp3"));
            audioOutput->setVolume(50);
@@ -81,13 +84,14 @@ void Player::keyPressEvent(QKeyEvent* event)
     }
     else if (event->key() == Qt::Key_Left && data[row][column - 1] >= 0)
     { // changing character model when moving to left
+         if (powered != true){
         QPixmap image("C:/Users/wifi/Downloads/My project-1(1).png");
         image = image.scaledToWidth(50);
         image = image.scaledToHeight(50);
         QTransform tr;
             tr.scale(-1, 1);
           image= image.transformed(tr);
-           setPixmap(image);
+           setPixmap(image);}
            player->setAudioOutput(audioOutput);
            player->setSource(QUrl::fromLocalFile("C:/Users/wifi/OneDrive/Documents/projectresourse/sound/wet-metal-footsteps-32703 (mp3cut.net).mp3"));
            audioOutput->setVolume(50);
@@ -102,8 +106,8 @@ void Player::keyPressEvent(QKeyEvent* event)
         {
             if (typeid(*items[i]) == typeid(Powerup)){
                 scene()->removeItem(items[i]);
-                connect(timer, SIGNAL(timeout()),this, SLOT(empower()));
-                timer->start(10);
+                powered=true;
+                time();
                 }
             }
         //losing health when touching enemy
@@ -147,8 +151,8 @@ QList<QGraphicsItem*> bullets = collidingItems();
                    if(enemy2->gethealth()!=1)
                        enemy2->losehealth();
                    else sptr ->removeItem(enemy2);}
-           if (enemy1->gethealth()==0 && enemy2->gethealth()==0){
-               win1->show();}
+//           if (enemy1->gethealth()==0 && enemy2->gethealth()==0){
+//               win1->show();}
            }
 
 
@@ -162,7 +166,8 @@ void Player::empower(){
     image = image.scaledToWidth(50);
     image = image.scaledToHeight(50);
     setPixmap(image);
-     count++;
+    powered=true;
+incre();
 }
 
 int Player::gethealth(){
@@ -188,4 +193,40 @@ void Player::collide(){
 }
 void Player::sethealth(int hp){
     health = hp;
+}
+void Player::time(){
+      elap.start();
+      int el = elap.elapsed();
+    while (el < 5000) {
+            qDebug()<< el;
+            el = elap.elapsed();
+         t->setSingleShot(false);
+         connect(t, SIGNAL(timeout()), this, SLOT(empower()));
+          t->start(100);
+         continue;
+    }
+    while(el < 10000 && el >= 5000){
+         qDebug()<< el;
+     el = elap.elapsed();
+       t->setSingleShot(true);
+     connect(t, SIGNAL(timeout()), this, SLOT(nopower()));
+     t->start(100);
+       continue;
+    }
+t->stop();}
+//        else{ nopower();
+//        reset();
+//        timer->stop();}
+void Player::incre(){
+    count++;
+}
+void Player::reset(){
+    count = 0;
+}
+void Player::nopower(){
+    QPixmap image ("C:/Users/wifi/Downloads/My project-1(1).png");
+    image = image.scaledToWidth(50);
+    image = image.scaledToHeight(50);
+    setPixmap(image);
+    powered = false;
 }
