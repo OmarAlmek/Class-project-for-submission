@@ -31,25 +31,21 @@ void Enemy2::movingenemy ()
         {
             row--;// this is not setting a position
              setPos(50+(50*column),50+(50*row));
-            // connect(timertom,SIGNAL(timeout()), this,SLOT(dt()) );
         }
             else if (n==1 && data[row+1][column]>=0)
         {
             row++;
               setPos(50+(50*column),50+(50*row));
-                 //connect(timertom,SIGNAL(timeout()), this,SLOT(ut()) );
         }
         else if ((n==2 )&& (data[row][column+1]>=0))
      {
             column++;
            setPos(50+(50*column),50+(50*row));
-              //connect(timertom,SIGNAL(timeout()), this,SLOT(rt()) );
      }
      else if ( n ==3 &&data[row][column-1]>=0)
     {
          column--;
           setPos(50+(50*column),50+(50*row));
-             //connect(timertom,SIGNAL(timeout()), this,SLOT(lt()) );
     }
 }
 void Enemy2::losehealth(){

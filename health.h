@@ -1,11 +1,8 @@
 #ifndef HEALTH_H
 #define HEALTH_H
 #include <QGraphicsPixmapItem>
-
 #include <algorithm>
-
 #include <QPainter>
-
 #include <chrono>
 #include <memory>
 #include <random>

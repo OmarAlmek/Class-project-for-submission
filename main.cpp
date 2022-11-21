@@ -151,34 +151,12 @@ bullet4.setPos(50 +  10 * 50, 50 + 10 * 50);
    scene->addItem(&heart3);
 
 
-
-//   while (player.getstatus() == true && *player.getcol() == true) {
-//       switch (player.gethealth()){
-//       case 3:
-//           scene.removeItem(&heart3);
-//      player.fixcol();
-//           break;
-//       case 2:
-//           scene.removeItem(&heart2);
-//           player.fixcol();
-//           break;
-//       case 1:
-//           scene.removeItem(&heart1);
-//            player.setstatus();
-//       default:
-//           break;
-//       }
-//}
-
-
-
     Enemy1 enemy1(boardData);
     Enemy2 enemy2(boardData);
     enemy2.setPos(50 +5* 50, 50 + 10 * 50);
     scene->addItem(&enemy1);
     scene->addItem(&enemy2);
 
-// Win *winscreen = new Win(&view, scene);
 
     Player player(boardData, &enemy1, &enemy2, &powerup1, scene, &heart1, &heart2, &heart3, view);
     scene->addItem(&player);
