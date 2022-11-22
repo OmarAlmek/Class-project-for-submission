@@ -13,8 +13,8 @@ Health* hptr1,Health* hptr2, Health* hptr3,QGraphicsView *viewptr, Bullet *b1, B
     image = image.scaledToHeight(50);
     setPixmap(image);
     // Set Position
-    row = 7;
-    column = 4;
+    row = 6;
+    column = 6;
     setPos(50 + column * 50, 50 + row * 50);
         sptr = sptrr;
         htprr1 =hptr1;
@@ -320,8 +320,8 @@ void Player::nopower(){
 void Player::resetpos(){
     enemy1->reset_health();
     enemy2->reset_health();
-    row = 7;
-    column =4;
+    row = 6;
+    column =6;
     setPos(50 + column * 50, 50 + row * 50);
     enemy1->set_column(6);
     enemy2->set_column(5);

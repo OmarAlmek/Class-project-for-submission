@@ -9,5 +9,5 @@ Powerup::Powerup()
         image = image.scaledToHeight(50);
         setPixmap(image);
         // Set Position
-        setPos(50 + 5 * 50, 50 + 5 * 50);
+        setPos(50 + 10 * 50, 50 + 5 * 50);
     }

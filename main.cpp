@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     QBrush brush(Qt::black);
     view->setBackgroundBrush(brush);
 
-    QFile file("C:/Users/wifi/OneDrive/Documents/projectresourse/map.txt"); // parse the text file
+    QFile file("C:/Users/wifi/Downloads/mapaux.txt"); // parse the text file
     file.open(QIODevice::ReadOnly);
     QTextStream stream(&file);
     int boardData[12][12];
@@ -52,13 +52,22 @@ int main(int argc, char *argv[])
     carsImage= carsImage.scaledToHeight(60);
 
 
-    QPixmap buildingImage1("C:/Users/wifi/OneDrive/Documents/projectresourse/building1.png"); // create building object
+    QPixmap buildingImage1("C:/Users/wifi/Downloads/building1sky.jpg"); // create building object
     buildingImage1 = buildingImage1.scaledToWidth(50);
      buildingImage1 = buildingImage1.scaledToHeight(50);
 
-     QPixmap buildingImage2("C:/Users/wifi/OneDrive/Documents/projectresourse/building2.png"); // create another building object
+     QPixmap buildingImage2("C:/Users/wifi/OneDrive/Documents/projectresourse/building2sky.jpg"); // create another building object
      buildingImage2 = buildingImage2.scaledToWidth(50);
       buildingImage2 = buildingImage2.scaledToHeight(50);
+
+      QPixmap building1pav("C:/Users/wifi/OneDrive/Documents/projectresourse/building1pav.jpg"); // create another building object
+      building1pav = building1pav.scaledToWidth(50);
+       building1pav = building1pav.scaledToHeight(50);
+
+
+       QPixmap building2pav("C:/Users/wifi/OneDrive/Documents/projectresourse/building2sky.jpg"); // create another building object
+       building2pav = building2pav.scaledToWidth(50);
+        building2pav = building2pav.scaledToHeight(50);
 
       QPixmap pavementImage("C:/Users/wifi/OneDrive/Documents/projectresourse/pavement.jpeg"); // create pavement object, next to the buildings at the top of the board
       pavementImage = pavementImage.scaledToWidth(50);
@@ -73,53 +82,69 @@ int main(int argc, char *argv[])
     QPixmap treeImage("C:/Users/wifi/Downloads/TreeDirt-Block.jpg"); // tree object
     treeImage = treeImage.scaledToWidth(50);
     treeImage = treeImage.scaledToHeight(50);
+    QPixmap treeskyeImage("C:/Users/wifi/OneDrive/Documents/projectresourse/treeskye.jpg"); // tree object
+    treeskyeImage = treeskyeImage.scaledToWidth(50);
+    treeskyeImage = treeskyeImage.scaledToHeight(50);
+    QPixmap stopsignImage("C:/Users/wifi/OneDrive/Documents/projectresourse/stopsignpav.jpg"); // tree object
+    stopsignImage = stopsignImage.scaledToWidth(50);
+    stopsignImage = stopsignImage.scaledToHeight(50);
+    stopsignImage = stopsignImage.transformed(tr);
+    QPixmap coneImage("C:/Users/wifi/OneDrive/Documents/projectresourse/conepav.jpg"); // tree object
+    coneImage = coneImage.scaledToWidth(50);
+    coneImage = coneImage.scaledToHeight(50);
 
     QGraphicsPixmapItem boardItems[12][12]; // creating board
     for (int i = 0; i < 12; i++)
         for (int j = 0; j < 12; j++)
         {
             // Set Image
-            if (boardData[i][j] == -1)
-                boardItems[i][j].setPixmap(roadImage); // set road position
-            else if(i == 6 && j == 4){
-                boardItems[i][j].setPixmap(houseImage); //set house image position
+
+            if(((i == 0) &&  (j > 7 || j == 0))){
+                boardItems[i][j].setPixmap(treeskyeImage); //set pavement tile next to buildings
 
             }
-            else if(i ==7 && j == 4){
-                boardItems[i][j].setPixmap(grassImage); // set grass around house
+            else if((i ==2) && (j > 2 && j < 10)){
+                 boardItems[i][j].setPixmap(pavementImage); //set pavement tile next to buildings
+
+             }
+            else if((i ==4 && j==6)){
+                boardItems[i][j].setPixmap(stopsignImage); //set pavement tile next to buildings
             }
-            else if(i ==6 && j == 5){
-                boardItems[i][j].setPixmap(grassImage); // set grass around house
+            else if((i ==6 && (j < 4 && j > 0))){
+                boardItems[i][j].setPixmap(coneImage); //set pavement tile next to buildings
             }
-            else if(i ==7 && j == 5){
-                boardItems[i][j].setPixmap(grassImage); // set grass around house
+            else if((i ==9 && j==3)){
+                boardItems[i][j].setPixmap(carsImage); //set pavement tile next to buildings
             }
-            else if(boardData[i][j]== -7){
+            else if((i ==10 && (j==3 || (j > 3 && j < 5)))){
+                boardItems[i][j].setPixmap(carsImage); //set pavement tile next to buildings
+            }
+            else if((i ==3 || i==4) && (j==3)){
+                boardItems[i][j].setPixmap(carsImage); //set pavement tile next to buildings
+            }
+            else if(i ==4 && j > 5){
+                boardItems[i][j].setPixmap(building1pav); //set pavement tile next to buildings
+            }
+            else if((i == 5) && (j==6)){
+                boardItems[i][j].setPixmap(houseImage); //set pavement tile next to buildings
+            }
+            else if((i == 6) && (j==6)){
+                boardItems[i][j].setPixmap(grassImage); //set pavement tile next to buildings
+            }
+            else if (boardData[i][j] == -1 && (!((i == 0) &&  (j > 7))))
                 boardItems[i][j].setPixmap(treeImage);
-            }
-
-            else if(boardData[i][j]== -2){
-                boardItems[i][j].setPixmap(buildingImage1); //set buldiing position
-            }
-            else if(boardData[i][j]== -3){
-                boardItems[i][j].setPixmap(buildingImage2); //set buldiing position
-            }
+            else if (boardData[i][j]== 1)
+                boardItems[i][j].setPixmap(roadImage);
+            else if (boardData[i][j]== -2)
+                boardItems[i][j].setPixmap(buildingImage1);
+            else if (boardData[i][j]== -3)
+                boardItems[i][j].setPixmap(buildingImage2);
             else if(boardData[i][j]== -4){
                 boardItems[i][j].setPixmap(pavementImage); //set pavement tile next to buildings
             }
-            else if(boardData[i][j]== -5){
-                boardItems[i][j].setPixmap(carsImage);} //set cars positions
-            else if(i >= 6 ){
-                boardItems[i][j].setPixmap(pavementImage);
-                //set pavement tile // i was too lazy to summarize them to one if statement so i just kept adding
-            }
 
-            else{
-            boardItems[i][j].setPixmap(roadImage);
-          }
-
-            // Set Position
-            boardItems[i][j].setPos(50 + j * 50, 50 + i * 50);
+          // Set Position
+          boardItems[i][j].setPos(50 + j * 50, 50 + i * 50);
 
             // Add to the Scene
             scene->addItem(&boardItems[i][j]);
@@ -128,7 +153,7 @@ int main(int argc, char *argv[])
 
     Powerup powerup1, powerup2;
     scene->addItem(&powerup1);
-    powerup2.setPos(50 + 7 * 50, 50 + 2 * 50);// set position for second banana
+    powerup2.setPos(50 + 1 * 50, 50 + 7 * 50);// set position for second banana
     scene->addItem(&powerup2);
 
 
