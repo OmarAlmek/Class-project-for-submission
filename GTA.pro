@@ -13,6 +13,7 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs depr
 
 SOURCES += \
     bullet.cpp \
+    door.cpp \
     enemy.cpp \
     enemy2.cpp \
     health.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
 
 HEADERS += \
     bullet.h \
+    door.h \
     enemy.h \
     enemy2.h \
     health.h \

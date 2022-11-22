@@ -3,7 +3,7 @@
 Enemy2::Enemy2(int boardData[12][12])
 {
     // Set Image
-    QPixmap image("C:/Users/wifi/OneDrive/Documents/projectresourse/enemy.png");
+    QPixmap image("C:/Users/wifi/Downloads/enemy1.png");
     image = image.scaledToWidth(50);
     image = image.scaledToHeight(50);
     setPixmap(image);

@@ -19,6 +19,9 @@
 #include "health.h"
 #include <QTime>
 #include "winloss.h"
+#include "door.h"
+#include "t.h"
+
 
 
 class Player : public QObject, public QGraphicsPixmapItem
@@ -35,16 +38,21 @@ private:
     Health * htprr1,* htprr2,* htprr3;
     Bullet * bul1,* bul2,* bul3,* bul4;
     Powerup * pow1, * pow2;
+    Door *door;
+    int timecount;
     WinLoss *win, *loss;
     QGraphicsScene *sptr;
     QGraphicsView *vptr;
+    QGraphicsTextItem *text[5];
     QMediaPlayer * music = new QMediaPlayer();
     QAudioOutput * musicaudio = new QAudioOutput();
     QTimer *t;
+    QTimer *dt;
+    int i=0;
 public:
     Player(int boardData[12][12], Enemy1* ptrenemy1, Enemy2* ptrenemy2, Powerup* fptr,
     QGraphicsScene *sptrr , Health* hptr1,Health* hptr2, Health* hptr3,QGraphicsView *viewptr, Bullet *b1,
-    Bullet *b2, Bullet *b3, Bullet *b4, Powerup* pu1, Powerup *pu2);
+    Bullet *b2, Bullet *b3, Bullet *b4, Powerup* pu1, Powerup *pu2,  Door* dr);
     int gethealth();
     bool powered = false;
     bool getstatus();
@@ -63,6 +71,7 @@ public slots:
    void shoot();
    void norm();
    void shootpower();
+   void reducecount();
 };
 
 #endif // PLAYER_H

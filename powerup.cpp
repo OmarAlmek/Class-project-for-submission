@@ -4,7 +4,7 @@
 Powerup::Powerup()
     {
         // Set Image
-       QPixmap image("C:/Users/wifi/Downloads/My project(6).png");
+       QPixmap image("C:/Users/wifi/OneDrive/Documents/GTA/projectresourse/powerupcoin.png");
         image = image.scaledToWidth(50);
         image = image.scaledToHeight(50);
         setPixmap(image);

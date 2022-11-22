@@ -15,6 +15,8 @@
 #include <QImage>
 #include <QMediaPlayer>
 #include "winloss.h"
+#include "door.h"
+#include "t.h"
 
 int main(int argc, char *argv[])
 {
@@ -183,10 +185,16 @@ bullet4.setPos(50 +  10 * 50, 50 + 10 * 50);
     scene->addItem(&enemy1);
     scene->addItem(&enemy2);
 
+    Door door;
+QGraphicsTextItem *textconst = scene->addText("Time remaining:");
+    textconst->setDefaultTextColor(QColorConstants::White);
+    textconst->setPos(50+9*50, 50 +13 * 50);
 
     Player player(boardData, &enemy1, &enemy2, &powerup1, scene, &heart1, &heart2, &heart3,
-                  view, &bullet1, &bullet2, &bullet3, &bullet4, &powerup1, &powerup2);
+                  view, &bullet1, &bullet2, &bullet3, &bullet4, &powerup1, &powerup2, &door);
     scene->addItem(&player);
+
+
 
     WinLoss win(true), loss(false);
     player.setFlag(QGraphicsPixmapItem::ItemIsFocusable);

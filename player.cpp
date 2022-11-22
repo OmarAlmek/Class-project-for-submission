@@ -4,7 +4,8 @@
 
 
 Player::Player(int boardData[12][12], Enemy1* ptrenemy1, Enemy2 *ptrenemy2, Powerup* fptr, QGraphicsScene *sptrr,
-Health* hptr1,Health* hptr2, Health* hptr3,QGraphicsView *viewptr, Bullet *b1, Bullet *b2, Bullet *b3, Bullet *b4, Powerup* pu1, Powerup *pu2)
+Health* hptr1,Health* hptr2, Health* hptr3,QGraphicsView *viewptr,
+Bullet *b1, Bullet *b2, Bullet *b3, Bullet *b4, Powerup* pu1, Powerup *pu2, Door* dr)
 {
     health = 3;
     // Set Image
@@ -31,16 +32,21 @@ Health* hptr1,Health* hptr2, Health* hptr3,QGraphicsView *viewptr, Bullet *b1, B
         pow2= pu2;
         win = new WinLoss(true);
         loss= new WinLoss(false);
-
+        door = dr;
+        timecount =5;
+        for (int f = 0; f < 5; f++){
+            text[i]= new QGraphicsTextItem;
+        }
     // Set data Array
     for (int i = 0; i < 12; i++)
         for (int j = 0; j < 12; j++)
             data[i][j] = boardData[i][j];
     //set timer
 t= new QTimer(this);
+dt= new QTimer(this);
 
 //set music theme
-    music->setSource(QUrl::fromLocalFile("file:///C:/Users/wifi/OneDrive/Documents/projectresourse/sound/gametheme.mp3"));
+    music->setSource(QUrl::fromLocalFile("C:/Users/wifi/OneDrive/Documents/GTA/projectresourse/sound/gametheme2.mp3"));
     musicaudio->setVolume(5);
     music->setAudioOutput(musicaudio);
     music->play();
@@ -242,12 +248,8 @@ void Player::keyPressEvent(QKeyEvent* event)
                            sptr->removeItem(enemy2);
                            enemy2->losehealth();
                            enemy2->losehealth();
-                           sptr->addItem(win);
-                           music->stop();
-                           player->setAudioOutput(audioOutput);
-                           player->setSource(QUrl::fromLocalFile("C:/Users/wifi/OneDrive/Documents/projectresourse/sound/winsound.mp3"));
-                           audioOutput->setVolume(50);
-                           player->play();
+                           sptr->addItem(door);
+
                        }
                    }
                    else
@@ -256,13 +258,8 @@ void Player::keyPressEvent(QKeyEvent* event)
                        t->start(500);
                        t->setSingleShot(true);
                        connect(t, SIGNAL(timeout()), this, SLOT (norm()));
-                       music->stop();
-                       player->setAudioOutput(audioOutput);
-                       player->setSource(QUrl::fromLocalFile("C:/Users/wifi/OneDrive/Documents/projectresourse/sound/winsound.mp3"));
-                       audioOutput->setVolume(50);
-                       player->play();
                        sptr ->removeItem(enemy2);
-                       sptr->addItem(win);
+                       sptr->addItem(door);
                        sptr->removeItem(htprr1);
                        sptr->removeItem(htprr2);
                        sptr->removeItem(htprr3);
@@ -271,10 +268,24 @@ void Player::keyPressEvent(QKeyEvent* event)
            }
         }
     }
+    { QList<QGraphicsItem*> doorc = collidingItems();
+         for (int i = 0; i < doorc.size(); i++)
+         {
+             if (typeid(*doorc[i]) == typeid(Door)){
+                 sptr->addItem(win);
+                 music->stop();
+                 player->setAudioOutput(audioOutput);
+                 player->setSource(QUrl::fromLocalFile("C:/Users/wifi/OneDrive/Documents/projectresourse/sound/winsound.mp3"));
+                 audioOutput->setVolume(50);
+                 player->play();
+                 }
+         }}
 }
 
-
 void Player::empower(){
+    dt->stop();
+    i=0;
+    timecount = 5;
     QMediaPlayer *player = new QMediaPlayer;
          QAudioOutput *audioOutput = new QAudioOutput;
     QPixmap image ("C:/Users/wifi/OneDrive/Documents/projectresourse/nerdbuff.png");
@@ -286,7 +297,11 @@ void Player::empower(){
     audioOutput->setVolume(50);
     player->play();
     powered=true;
+    dt->start(1000);
+    dt->setSingleShot(false);
+    connect(dt, SIGNAL(timeout()), this, SLOT (reducecount()));
 }
+
 
 int Player::gethealth(){
     return health;
@@ -368,3 +383,15 @@ void Player::norm(){
     image = image.scaledToHeight(50);
     setPixmap(image);
 }
+void Player::reducecount(){
+    if (powered == true){
+    sptr->removeItem(text[i]);
+    text[i] = sptr->addText(QString::number(timecount));
+    text[i]->setDefaultTextColor(QColorConstants::White);
+    text[i]->setPos(50+11*50, 50 +13 * 50);
+    text[i]->setTextWidth(50);
+    timecount--;
+    if (timecount ==-1){
+        dt->stop();}}
+}
+
