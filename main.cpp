@@ -16,7 +16,7 @@
 #include <QMediaPlayer>
 #include "winloss.h"
 #include "door.h"
-#include "t.h"
+#include <QGraphicsTextItem>
 
 int main(int argc, char *argv[])
 {

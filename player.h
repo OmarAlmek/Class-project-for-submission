@@ -3,6 +3,7 @@
 
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
+#include <QGraphicsTextItem>
 #include <QKeyEvent>
 #include <QList>
 #include <QImage>
@@ -20,8 +21,6 @@
 #include <QTime>
 #include "winloss.h"
 #include "door.h"
-#include "t.h"
-
 
 
 class Player : public QObject, public QGraphicsPixmapItem

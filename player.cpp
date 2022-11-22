@@ -283,7 +283,6 @@ void Player::keyPressEvent(QKeyEvent* event)
 }
 
 void Player::empower(){
-    dt->stop();
     i=0;
     timecount = 5;
     QMediaPlayer *player = new QMediaPlayer;
@@ -384,7 +383,6 @@ void Player::norm(){
     setPixmap(image);
 }
 void Player::reducecount(){
-    if (powered == true){
     sptr->removeItem(text[i]);
     text[i] = sptr->addText(QString::number(timecount));
     text[i]->setDefaultTextColor(QColorConstants::White);
@@ -392,6 +390,6 @@ void Player::reducecount(){
     text[i]->setTextWidth(50);
     timecount--;
     if (timecount ==-1){
-        dt->stop();}}
+        dt->stop();}
 }
 
