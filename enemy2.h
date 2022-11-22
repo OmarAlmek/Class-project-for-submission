@@ -14,7 +14,6 @@ private:
     int row, column;
     int data[12][12];
     int health;
-    QTimer *timerenemy;
 public:
     Enemy2(int boardData[12][12]);
     void losehealth();

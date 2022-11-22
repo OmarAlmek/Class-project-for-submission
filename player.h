@@ -31,14 +31,14 @@ private:
     int data[12][12];
     int health;
     bool alive = true;
-    int count = 0;
+     int timecount;
+       int i=0; // for timer on bottom right of display
     Enemy1 *enemy1;
     Enemy2 *enemy2;
     Health * htprr1,* htprr2,* htprr3;
     Bullet * bul1,* bul2,* bul3,* bul4;
     Powerup * pow1, * pow2;
     Door *door;
-    int timecount;
     WinLoss *win, *loss;
     QGraphicsScene *sptr;
     QGraphicsView *vptr;
@@ -47,7 +47,7 @@ private:
     QAudioOutput * musicaudio = new QAudioOutput();
     QTimer *t;
     QTimer *dt;
-    int i=0;
+
 public:
     Player(int boardData[12][12], Enemy1* ptrenemy1, Enemy2* ptrenemy2, Powerup* fptr,
     QGraphicsScene *sptrr , Health* hptr1,Health* hptr2, Health* hptr3,QGraphicsView *viewptr, Bullet *b1,
