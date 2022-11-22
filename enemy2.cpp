@@ -2,9 +2,6 @@
 
 Enemy2::Enemy2(int boardData[12][12])
 {
-    timerenemy= new QTimer(this);
-       connect(timerenemy,SIGNAL(timeout()), this,SLOT(movingenemy()));
-       timerenemy->start(500);
     // Set Image
     QPixmap image("C:/Users/wifi/OneDrive/Documents/projectresourse/enemy.png");
     image = image.scaledToWidth(50);
@@ -53,4 +50,13 @@ void Enemy2::losehealth(){
 }
 int Enemy2::gethealth(){
     return health;
+}
+void Enemy2::set_row(int r){
+    row=r;
+}
+void Enemy2::set_column(int c){
+    column=c;
+}
+void Enemy2::reset_health(){
+    health=2;
 }

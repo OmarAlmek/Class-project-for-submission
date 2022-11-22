@@ -18,7 +18,8 @@ SOURCES += \
     health.cpp \
     main.cpp \
     player.cpp \
-    powerup.cpp
+    powerup.cpp \
+    winloss.cpp
 
 HEADERS += \
     bullet.h \
@@ -26,7 +27,8 @@ HEADERS += \
     enemy2.h \
     health.h \
     player.h \
-    powerup.h
+    powerup.h \
+    winloss.h
 
 FORMS += \
     player.ui

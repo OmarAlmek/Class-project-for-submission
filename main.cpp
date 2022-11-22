@@ -14,6 +14,7 @@
 #include <QDebug>
 #include <QImage>
 #include <QMediaPlayer>
+#include "winloss.h"
 
 int main(int argc, char *argv[])
 {
@@ -51,15 +52,15 @@ int main(int argc, char *argv[])
     carsImage= carsImage.scaledToHeight(60);
 
 
-    QPixmap buildingImage1("C:/Users/wifi/Downloads/Spritesheet_adobe_express.png"); // create building object
+    QPixmap buildingImage1("C:/Users/wifi/OneDrive/Documents/projectresourse/building1.png"); // create building object
     buildingImage1 = buildingImage1.scaledToWidth(50);
      buildingImage1 = buildingImage1.scaledToHeight(50);
 
-     QPixmap buildingImage2("C:/Users/wifi/Downloads/Spritesheet_adobe_express(1).png"); // create another building object
+     QPixmap buildingImage2("C:/Users/wifi/OneDrive/Documents/projectresourse/building2.png"); // create another building object
      buildingImage2 = buildingImage2.scaledToWidth(50);
       buildingImage2 = buildingImage2.scaledToHeight(50);
 
-      QPixmap pavementImage("C:/Users/wifi/Downloads/363170d5530e4dff3732c9fac51db744--pixel-art-indie-games_adobe_express.jpeg"); // create pavement object, next to the buildings at the top of the board
+      QPixmap pavementImage("C:/Users/wifi/OneDrive/Documents/projectresourse/pavement.jpeg"); // create pavement object, next to the buildings at the top of the board
       pavementImage = pavementImage.scaledToWidth(50);
       pavementImage = pavementImage.scaledToHeight(50);
 
@@ -69,7 +70,7 @@ int main(int argc, char *argv[])
     QPixmap grassImage("C:/Users/wifi/OneDrive/Documents/projectresourse/grass (2).png"); // grass object
     grassImage = grassImage.scaledToWidth(50);
     grassImage = grassImage.scaledToHeight(50);
-    QPixmap treeImage("C:/Users/wifi/OneDrive/Documents/projectresourse/tree.png"); // tree object
+    QPixmap treeImage("C:/Users/wifi/Downloads/TreeDirt-Block.jpg"); // tree object
     treeImage = treeImage.scaledToWidth(50);
     treeImage = treeImage.scaledToHeight(50);
 
@@ -158,9 +159,11 @@ bullet4.setPos(50 +  10 * 50, 50 + 10 * 50);
     scene->addItem(&enemy2);
 
 
-    Player player(boardData, &enemy1, &enemy2, &powerup1, scene, &heart1, &heart2, &heart3, view);
+    Player player(boardData, &enemy1, &enemy2, &powerup1, scene, &heart1, &heart2, &heart3,
+                  view, &bullet1, &bullet2, &bullet3, &bullet4, &powerup1, &powerup2);
     scene->addItem(&player);
 
+    WinLoss win(true), loss(false);
     player.setFlag(QGraphicsPixmapItem::ItemIsFocusable);
     player.setFocus();
 
