@@ -2,6 +2,7 @@
 QT += core gui
 QT += multimedia
 QT += multimediawidgets
+QT += widgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -17,10 +18,12 @@ SOURCES += \
     enemy.cpp \
     enemy2.cpp \
     health.cpp \
+    losswindow.cpp \
     main.cpp \
+    mainwindow.cpp \
     player.cpp \
     powerup.cpp \
-    winloss.cpp
+    winwindow.cpp
 
 HEADERS += \
     bullet.h \
@@ -28,12 +31,17 @@ HEADERS += \
     enemy.h \
     enemy2.h \
     health.h \
+    losswindow.h \
+    mainwindow.h \
     player.h \
     powerup.h \
-    winloss.h
+    winwindow.h
 
 FORMS += \
-    player.ui
+    losswindow.ui \
+    mainwindow.ui \
+    player.ui \
+    winwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

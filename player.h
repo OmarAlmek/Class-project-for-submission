@@ -19,7 +19,8 @@
 #include "enemy2.h"
 #include "health.h"
 #include <QTime>
-#include "winloss.h"
+#include "winwindow.h"
+#include "losswindow.h"
 #include "door.h"
 
 
@@ -39,7 +40,6 @@ private:
     Bullet * bul1,* bul2,* bul3,* bul4;
     Powerup * pow1, * pow2;
     Door *door;
-    WinLoss *win, *loss;
     QGraphicsScene *sptr;
     QGraphicsView *vptr;
     QGraphicsTextItem *text[5];
@@ -47,11 +47,15 @@ private:
     QAudioOutput * musicaudio = new QAudioOutput();
     QTimer *t;
     QTimer *dt;
+    QTimer *et;
+    QTimer *e2t;
+    WinWindow*w1;
+    LossWindow*l1;
 
 public:
     Player(int boardData[12][12], Enemy1* ptrenemy1, Enemy2* ptrenemy2, Powerup* fptr,
     QGraphicsScene *sptrr , Health* hptr1,Health* hptr2, Health* hptr3,QGraphicsView *viewptr, Bullet *b1,
-    Bullet *b2, Bullet *b3, Bullet *b4, Powerup* pu1, Powerup *pu2,  Door* dr);
+    Bullet *b2, Bullet *b3, Bullet *b4, Powerup* pu1, Powerup *pu2,  Door* dr, WinWindow* w, LossWindow*l);
     int gethealth();
     bool powered = false;
     bool getstatus();
@@ -63,14 +67,17 @@ public:
 
 
 public slots:
-    void keyPressEvent(QKeyEvent* event);
-    void empower();
-    void nopower();
+   void keyPressEvent(QKeyEvent* event);
+   void empower();
+   void nopower();
    void resetpos();
    void shoot();
    void norm();
    void shootpower();
    void reducecount();
+/*   void resetGame(int boardData[12][12], Enemy1* ptrenemy1, Enemy2 *ptrenemy2, QGraphicsScene *sptrr,
+   Health* hptr1,Health* hptr2, Health* hptr3,QGraphicsView *viewptr,
+   Bullet *b1, Bullet *b2, Bullet *b3, Bullet *b4, Powerup* pu1, Powerup *pu2, Door* dr);*/
 };
 
 #endif // PLAYER_H

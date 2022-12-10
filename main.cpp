@@ -14,8 +14,8 @@
 #include <QDebug>
 #include <QImage>
 #include <QMediaPlayer>
-#include "winloss.h"
 #include "door.h"
+#include "mainwindow.h"
 #include <QGraphicsTextItem>
 
 int main(int argc, char *argv[])
@@ -181,7 +181,7 @@ bullet4.setPos(50 +  10 * 50, 50 + 10 * 50);
 
     Enemy1 enemy1(boardData);
     Enemy2 enemy2(boardData);
-    enemy2.setPos(50 +5* 50, 50 + 10 * 50);
+    enemy2.setPos(50 +1* 50, 50 + 10 * 50);
     scene->addItem(&enemy1);
     scene->addItem(&enemy2);
 
@@ -190,17 +190,17 @@ QGraphicsTextItem *textconst = scene->addText("Time remaining:");
     textconst->setDefaultTextColor(QColorConstants::White);
     textconst->setPos(50+9*50, 50 +13 * 50);
 
+    WinWindow w(nullptr,view,scene);
+    LossWindow L(nullptr, view,scene);
+
     Player player(boardData, &enemy1, &enemy2, &powerup1, scene, &heart1, &heart2, &heart3,
-                  view, &bullet1, &bullet2, &bullet3, &bullet4, &powerup1, &powerup2, &door);
+                  view, &bullet1, &bullet2, &bullet3, &bullet4, &powerup1, &powerup2, &door, &w, &L);
     scene->addItem(&player);
 
-
-
-    WinLoss win(true), loss(false);
     player.setFlag(QGraphicsPixmapItem::ItemIsFocusable);
     player.setFocus();
 
-    view->setScene(scene);
-    view->show();
+    MainWindow m(nullptr,view,scene);
+    m.show();
     return a.exec();
 }
