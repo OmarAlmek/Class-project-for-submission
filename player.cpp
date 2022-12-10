@@ -61,7 +61,9 @@ e2t = new QTimer (this);
 void Player::keyPressEvent(QKeyEvent* event)
 {  QMediaPlayer *player = new QMediaPlayer;
      QAudioOutput *audioOutput = new QAudioOutput;
-
+     Pair enemy1pos= {enemy1->row, enemy1->column};
+     Pair enemy2pos= {enemy2->row, enemy2->column};
+     Pair pos = {row, column};
     if (event->key() == Qt::Key_Up && data[row - 1][column] >= 0)
     {
 
@@ -145,11 +147,9 @@ void Player::keyPressEvent(QKeyEvent* event)
     }
     }
     setPos(50 + column * 50, 50 + row * 50);
-    Pair pos = {row, column};
-    Pair enemy1pos= {enemy1->row, enemy1->column};
-    Pair enemy2pos= {enemy2->row, enemy2->column};
-//    if (enemy1->alive == true){
-//       enemy1->movingenemy(enemy1pos, pos);}
+
+    if (enemy1->alive == true){
+     enemy1->movingenemy(enemy1pos, pos);}
 
     if (enemy2->alive == true){
         enemy2->movingenemy(enemy2pos, pos);}
@@ -167,17 +167,19 @@ void Player::keyPressEvent(QKeyEvent* event)
    { QList<QGraphicsItem*> enemies = collidingItems();
          for (int i = 0; i < enemies.size(); i++)
             {
-                if ((typeid(*enemies[i]) == typeid(Enemy1) || typeid(*enemies[i])== typeid(Enemy2)) && powered == false){
-
-                    sethealth(decreasehealth());
-                          if ( health==2)
+                if (typeid(*enemies[i]) == typeid(Enemy1) || typeid(*enemies[i])== typeid(Enemy2)){
+                    if(!powered) sethealth(decreasehealth());
+                          if (health==2)
                                {
-                                   sptr->removeItem(htprr3);
-                                   player->setAudioOutput(audioOutput);
-                                   player->setSource(QUrl::fromLocalFile("C:/Users/wifi/OneDrive/Documents/projectresourse/sound/Takedamagesound.mp3"));
-                                   audioOutput->setVolume(50);
-                                   player->play();
-                                resetpos();
+                                   if(!powered)
+                                   {
+                                       sptr->removeItem(htprr3);
+                                       player->setAudioOutput(audioOutput);
+                                       player->setSource(QUrl::fromLocalFile("C:/Users/wifi/OneDrive/Documents/projectresourse/sound/Takedamagesound.mp3"));
+                                       audioOutput->setVolume(50);
+                                       player->play();
+                                   }
+                                   resetpos();
                                }
 
                           else if (health == 1)
@@ -207,9 +209,8 @@ void Player::keyPressEvent(QKeyEvent* event)
                               musicaudio->setVolume(50);
                               music->setAudioOutput(musicaudio);
                               music->play();
-                }
-         }}}
-
+                }}
+         }}
     int enemy1dis= ((enemy1->row- row) * (enemy1->row -row) + (enemy1->column- column) * (enemy1->column- column));
     int enemy2dis= ((enemy2->row- row) * (enemy2->row -row) + (enemy2->column- column) * (enemy2->column- column));
 {QList<QGraphicsItem*> bullets = collidingItems();
@@ -217,7 +218,7 @@ void Player::keyPressEvent(QKeyEvent* event)
        {
            if (typeid(*bullets[i])== typeid(Bullet)){
                scene()->removeItem(bullets[i]);
-                  if(enemy1->alive == true){
+                  if(enemy1->alive == true && enemy2->alive == true){
                       if (enemy1dis < enemy2dis && enemy1->gethealth() > 1){
                           shoot();
                           t->start(500);
@@ -230,7 +231,7 @@ void Player::keyPressEvent(QKeyEvent* event)
                               t->setSingleShot(true);
                               connect(t, SIGNAL(timeout()),this, SLOT (norm()));
                               enemy1->alive = false;
-                              sptr->removeitem(enemy1);
+                              sptr->removeItem(enemy1);
                           }
 
                       }
@@ -240,13 +241,148 @@ void Player::keyPressEvent(QKeyEvent* event)
                           t->setSingleShot(true);
                           connect(t, SIGNAL(timeout()), this, SLOT (norm()));
                           enemy1->losehealth();
-                          enemy1->alove = false;
+                          enemy1->alive = false;
                           sptr->removeItem(enemy1);
+                          if (powered == true){
+                              shootpower();
+                              t->start(500);
+                              t->setSingleShot(true);
+                              connect(t, SIGNAL(timeout()),this, SLOT (norm()));
+                              enemy1->alive = false;
+                              sptr->removeItem(enemy1);
+                          }
+                      }
+                      else if(enemy1dis > enemy2dis && enemy2->gethealth()> 1){
+                              shoot();
+                              t->start(500);
+                              t->setSingleShot(true);
+                              connect(t, SIGNAL(timeout()), this, SLOT (norm()));
+                              enemy2->losehealth();
+                              if (powered == true){
+                                  shootpower();
+                                  t->start(500);
+                                  t->setSingleShot(true);
+                                  connect(t, SIGNAL(timeout()),this, SLOT (norm()));
+                                  enemy2->alive = false;
+                                  sptr->removeItem(enemy2);
+                              }
+
+                          }
+                       else if(enemy1dis > enemy2dis && enemy2-> gethealth() ==1){
+                              shoot();
+                              t->start(500);
+                              t->setSingleShot(true);
+                              connect(t, SIGNAL(timeout()), this, SLOT (norm()));
+                              enemy2->losehealth();
+                              enemy2->alive = false;
+                              sptr->removeItem(enemy2);
+                              if (powered == true){
+                                  shootpower();
+                                  t->start(500);
+                                  t->setSingleShot(true);
+                                  connect(t, SIGNAL(timeout()),this, SLOT (norm()));
+                                  enemy2->alive = false;
+                                  sptr->removeItem(enemy2);
+                              }
+                          }
+                  }
+                      else if(enemy1->alive == true && enemy2->alive == false){
+                          if (enemy1->gethealth()>1){
+                              shoot();
+                              t->start(500);
+                              t->setSingleShot(true);
+                              connect(t, SIGNAL(timeout()), this, SLOT (norm()));
+                              enemy1->losehealth();
+                              if (powered == true){
+                                  shootpower();
+                                  t->start(500);
+                                  t->setSingleShot(true);
+                                  connect(t, SIGNAL(timeout()),this, SLOT (norm()));
+                                  enemy1->alive = false;
+                                  sptr->removeItem(enemy1);
+                                  sptr->addItem(door);
+                                  sptr->removeItem(htprr1);
+                                  sptr->removeItem(htprr2);
+                                  sptr->removeItem(htprr3);
+                              }
+                          }
+                              else if(enemy1->gethealth() == 1){
+                                  shoot();
+                                  t->start(500);
+                                  t->setSingleShot(true);
+                                  connect(t, SIGNAL(timeout()), this, SLOT (norm()));
+                                  enemy1->losehealth();
+                                  enemy1->alive = false;
+                                  sptr->removeItem(enemy1);
+                                  sptr->addItem(door);
+                                  sptr->removeItem(htprr1);
+                                  sptr->removeItem(htprr2);
+                                  sptr->removeItem(htprr3);
+                                  if (powered == true){
+                                      shootpower();
+                                      t->start(500);
+                                      t->setSingleShot(true);
+                                      connect(t, SIGNAL(timeout()),this, SLOT (norm()));
+                                      enemy1->alive = false;
+                                      sptr->removeItem(enemy1);
+                                      sptr->addItem(door);
+                                      sptr->removeItem(htprr1);
+                                      sptr->removeItem(htprr2);
+                                      sptr->removeItem(htprr3);
+                              }
+                          }
+
+                          }
+                      else if(enemy2->alive == true && enemy1->alive == false){
+                          if(enemy2->gethealth()>1) {
+                          shoot();
+                          t->start(500);
+                          t->setSingleShot(true);
+                          connect(t, SIGNAL(timeout()), this, SLOT (norm()));
+                          enemy2->losehealth();
+                          if (powered == true){
+                              shootpower();
+                              t->start(500);
+                              t->setSingleShot(true);
+                              connect(t, SIGNAL(timeout()),this, SLOT (norm()));
+                              enemy2->alive = false;
+                              sptr->removeItem(enemy2);
+                              sptr->addItem(door);
+                              sptr->removeItem(htprr1);
+                              sptr->removeItem(htprr2);
+                              sptr->removeItem(htprr3);
+                          }
+                          }
+                          else if(enemy2->gethealth() == 1){
+                              shoot();
+                              t->start(500);
+                              t->setSingleShot(true);
+                              connect(t, SIGNAL(timeout()), this, SLOT (norm()));
+                              enemy2->losehealth();
+                              enemy2->alive = false;
+                              sptr->removeItem(enemy2);
+                              sptr->addItem(door);
+                              sptr->removeItem(htprr1);
+                              sptr->removeItem(htprr2);
+                              sptr->removeItem(htprr3);
+                              if (powered == true){
+                                  shootpower();
+                                  t->start(500);
+                                  t->setSingleShot(true);
+                                  connect(t, SIGNAL(timeout()),this, SLOT (norm()));
+                                  enemy2->alive = false;
+                                  sptr->removeItem(enemy2);
+                                  sptr->addItem(door);
+                                  sptr->removeItem(htprr1);
+                                  sptr->removeItem(htprr2);
+                                  sptr->removeItem(htprr3);
+                              }
+                          }
+                      }
+
+                      }
                       }
                   }
-       }
-    }
-
     { QList<QGraphicsItem*> doorc = collidingItems();
          for (int i = 0; i < doorc.size(); i++)
          {
@@ -324,7 +460,7 @@ void Player::resetpos(){
     column =6;
     setPos(50 + column * 50, 50 + row * 50);
     enemy1->set_column(6);
-    enemy2->set_column(5);
+    enemy2->set_column(1);
     enemy1->set_row(10);
     enemy2->set_row(10);
     enemy1->setPos(50 + 6 * 50, 50 + 10 * 50);
