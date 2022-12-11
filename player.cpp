@@ -191,7 +191,18 @@ Pair enemy2pos= {enemy2->row, enemy2->column};
        {
            if (typeid(*bullets[i])== typeid(Bullet)){
                scene()->removeItem(bullets[i]);
-                  if(enemy1->alive == true && enemy2->alive == true){
+               if (enemy1->alive && enemy2->alive && enemy1dis == enemy2dis){
+                   shotTimer->start(200);
+                   connect(shotTimer,SIGNAL(timeout()),this,SLOT(shoot()));
+                   timer->start(1000);
+                   timer->setSingleShot(true);
+                   connect(timer,SIGNAL(timeout()),this,SLOT(noshoot()));
+                     enemy1->losehealth();
+                     if (powered == true){
+                         enemy1->alive = false;
+                         sptr->removeItem(enemy1);
+                     }}
+                    else if(enemy1->alive == true && enemy2->alive == true){
                       if (enemy1dis < enemy2dis && enemy1->gethealth() > 1){
                         shotTimer->start(200);
                         connect(shotTimer,SIGNAL(timeout()),this,SLOT(shoot()));
