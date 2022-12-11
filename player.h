@@ -31,6 +31,9 @@ private:
     int row, column;
     int data[12][12];
     int health;
+    int x=1;
+    int y=1;
+    int z=1;
     bool alive = true;
      int timecount;
        int i=0; // for timer on bottom right of display
@@ -47,10 +50,13 @@ private:
     QAudioOutput * musicaudio = new QAudioOutput();
     QTimer *t;
     QTimer *dt;
-    QTimer *et;
-    QTimer *e2t;
     WinWindow*w1;
     LossWindow*l1;
+    QTimer*powerupt;
+    QTimer*movingTimer;
+    QTimer*timer;
+    QTimer*shotTimer;
+    QTimer*enemyhurt;
 
 public:
     Player(int boardData[12][12], Enemy1* ptrenemy1, Enemy2* ptrenemy2, Powerup* fptr,
@@ -72,9 +78,12 @@ public slots:
    void nopower();
    void resetpos();
    void shoot();
-   void norm();
-   void shootpower();
    void reducecount();
+   void r();
+   void l();
+   void noshoot();
+   void enemy1norm();
+   void enemy2norm();
 /*   void resetGame(int boardData[12][12], Enemy1* ptrenemy1, Enemy2 *ptrenemy2, QGraphicsScene *sptrr,
    Health* hptr1,Health* hptr2, Health* hptr3,QGraphicsView *viewptr,
    Bullet *b1, Bullet *b2, Bullet *b3, Bullet *b4, Powerup* pu1, Powerup *pu2, Door* dr);*/

@@ -5,7 +5,7 @@ typedef tuple<double, int, int> Tuple;
 Enemy1::Enemy1(int boardData[12][12])
 {
     // Set Image
-    QPixmap image("C:/Users/wifi/Downloads/image(2).png");
+    QPixmap image("C:/Users/wifi/Downloads/en1.png");
     image = image.scaledToWidth(50);
     image = image.scaledToHeight(50);
     setPixmap(image);
@@ -80,5 +80,9 @@ Pair Enemy1::bfs(Pair source, Pair des, int matrix[12][12]) {
     pair <int ,int > ans = find(source, des, parent  );
     return ans;
 }
-
-
+void Enemy1::hurt(){
+    QPixmap image("C:/Users/wifi/Downloads/enhurt.png");
+    image = image.scaledToWidth(50);
+    image = image.scaledToHeight(50);
+    setPixmap(image);
+}

@@ -40,11 +40,12 @@ public:
     void set_column(int c);
     void reset_health();
     void sethealth(int h);
+    void hurt();
 
 public slots:
     Pair find(Pair src, Pair des, vector <vector <Pair>> parent);
     void movingenemy(Pair &source, Pair destination);
-    Pair bfs(Pair source, Pair des, int matrix[12][12]) ;
+    Pair bfs(Pair source, Pair des, int matrix[12][12]);
 };
 
 #endif // ENEMY_H

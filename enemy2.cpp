@@ -3,7 +3,7 @@
 Enemy2::Enemy2(int boardData[12][12])
 {
     // Set Image
-    QPixmap image("C:/Users/wifi/Downloads/enemy1.png");
+    QPixmap image("C:/Users/wifi/Downloads/en2.png");
     image = image.scaledToWidth(50);
     image = image.scaledToHeight(50);
     setPixmap(image);
@@ -77,4 +77,10 @@ Pair Enemy2::bfs(Pair source, Pair des, int matrix[12][12]) {
     }
     pair <int ,int > ans = find(source, des, parent  );
     return ans;
+}
+void Enemy2::hurt(){
+    QPixmap image("C:/Users/wifi/Downloads/enhurt.png");
+    image = image.scaledToWidth(50);
+    image = image.scaledToHeight(50);
+    setPixmap(image);
 }
