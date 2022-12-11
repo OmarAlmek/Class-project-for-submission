@@ -61,8 +61,7 @@ Bullet *b1, Bullet *b2, Bullet *b3, Bullet *b4, Powerup* pu1, Powerup *pu2, Door
 void Player::keyPressEvent(QKeyEvent* event)
 {  QMediaPlayer *player = new QMediaPlayer;
      QAudioOutput *audioOutput = new QAudioOutput;
- Pair enemy1pos= {enemy1->row, enemy1->column};
- Pair enemy2pos= {enemy2->row, enemy2->column};
+
     if (event->key() == Qt::Key_Up && data[row - 1][column] >= 0)
     {
 
@@ -103,7 +102,8 @@ void Player::keyPressEvent(QKeyEvent* event)
            connect(movingTimer,SIGNAL(timeout()),this,SLOT(l()));
     }
     setPos(50 + column * 50, 50 + row * 50);
-
+    Pair enemy1pos= {enemy1->row, enemy1->column};
+    Pair enemy2pos= {enemy2->row, enemy2->column};
 
     Pair pos = {row, column};
 
@@ -380,22 +380,6 @@ void Player::keyPressEvent(QKeyEvent* event)
 }
 
 void Player::empower(){
-/*    i=0;
-    timecount = 5;
-    QMediaPlayer *player = new QMediaPlayer;
-         QAudioOutput *audioOutput = new QAudioOutput;
-    QPixmap image ("C:/Users/wifi/OneDrive/Documents/projectresourse/nerdbuff.png");
-    image = image.scaledToWidth(50);
-    image = image.scaledToHeight(50);
-    setPixmap(image);
-    player->setAudioOutput(audioOutput);
-    player->setSource(QUrl::fromLocalFile("C:/Users/wifi/OneDrive/Documents/projectresourse/sound/reloadsound.mp3"));
-    audioOutput->setVolume(50);
-    player->play();
-    powered=true;
-    dt->start(1000);
-    dt->setSingleShot(false);
-    connect(dt, SIGNAL(timeout()), this, SLOT (reducecount()));*/
     powered=true;
 }
 
@@ -416,19 +400,6 @@ void Player::sethealth(int hp){
     health = hp;
 }
 
-/*void Player::time(){
-      empower();
-t->start(5000);
-t->setSingleShot(true);
-connect(t, SIGNAL(timeout()), this, SLOT (nopower()));
-}
-void Player::nopower(){
-    QPixmap image ("C:/Users/wifi/OneDrive/Documents/projectresourse/nerddefault.png");
-    image = image.scaledToWidth(50);
-    image = image.scaledToHeight(50);
-    setPixmap(image);
-    powered = false;
-}*/
 void Player::resetpos(){
     enemy1->reset_health();
     enemy2->reset_health();
@@ -453,32 +424,7 @@ void Player::resetpos(){
     enemy1->alive = true;
     enemy2->alive = true;
 }
-//void Player::shoot(){
 
-//    QPixmap image ("C:/Users/wifi/OneDrive/Documents/projectresourse/nerdshootnobuff.png");
-//    image = image.scaledToWidth(50);
-//    image = image.scaledToHeight(50);
-//    setPixmap(image);
-//
-//}
-//void Player::shootpower(){
-//    QMediaPlayer *player = new QMediaPlayer;
-//    QAudioOutput *audioOutput = new QAudioOutput;
-//    QPixmap image ("C:/Users/wifi/OneDrive/Documents/projectresourse/nerdbuffshoot.png");
-//    image = image.scaledToWidth(50);
-//    image = image.scaledToHeight(50);
-//    setPixmap(image);
-//    player->setAudioOutput(audioOutput);
-//    player->setSource(QUrl::fromLocalFile("C:/Users/wifi/OneDrive/Documents/projectresourse/sound/powershotsound.mp3"));
-//    audioOutput->setVolume(50);
-//    player->play();
-//}
-//void Player::norm(){
-//    QPixmap image("C:/Users/wifi/OneDrive/Documents/projectresourse/nerddefault.png");
-//    image = image.scaledToWidth(50);
-//    image = image.scaledToHeight(50);
-//    setPixmap(image);
-//}
 void Player::reducecount(){
     sptr->removeItem(text[i]);
     text[i] = sptr->addText(QString::number(timecount));

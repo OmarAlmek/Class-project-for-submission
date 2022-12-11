@@ -52,7 +52,7 @@ Pair Enemy2::find(Pair src, Pair des, vector <vector <Pair>> parent) {
 }
 
 Pair Enemy2::bfs(Pair source, Pair des, int matrix[12][12]) {
-    int n =12 , m = 12;
+   while(source != des){ int n =12 , m = 12;
     queue <pair <pair <int ,int >, int >>  q;
     vector <vector <pair<int,int >>> parent (n, vector<Pair>(m,{0,0}) );
     vector <vector <int >> dis(n, vector <int > (m,1e9));
@@ -76,7 +76,7 @@ Pair Enemy2::bfs(Pair source, Pair des, int matrix[12][12]) {
         }
     }
     pair <int ,int > ans = find(source, des, parent  );
-    return ans;
+    return ans;}
 }
 void Enemy2::hurt(){
     QPixmap image("C:/Users/wifi/Downloads/enhurt.png");
