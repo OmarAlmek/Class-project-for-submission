@@ -62,7 +62,7 @@ Bullet *b1, Bullet *b2, Bullet *b3, Bullet *b4, Powerup* pu1, Powerup *pu2, Door
 void Player::keyPressEvent(QKeyEvent* event)
 {  QMediaPlayer *player = new QMediaPlayer;
      QAudioOutput *audioOutput = new QAudioOutput;
-Pair enemy2pos= {enemy2->row, enemy2->column};
+
     if (event->key() == Qt::Key_Up && data[row - 1][column] >= 0)
     {
 
@@ -104,7 +104,7 @@ Pair enemy2pos= {enemy2->row, enemy2->column};
     }
     setPos(50 + column * 50, 50 + row * 50);
     Pair enemy1pos= {enemy1->row, enemy1->column};
-
+Pair enemy2pos= {enemy2->row, enemy2->column};
     Pair pos = {row, column};
 
     if (enemy1->alive == true){
@@ -479,8 +479,8 @@ void Player::r(){
         else
         {
             QPixmap image("C:/Users/wifi/Downloads/Criminal Pixels/Criminal Pixels/Running/prun1.png");
-            image=image.scaledToWidth(60);
-            image=image.scaledToHeight(60);
+            image=image.scaledToWidth(55);
+            image=image.scaledToHeight(55);
             setPixmap(image);
         }
         x=2;
@@ -494,8 +494,8 @@ void Player::r(){
         }
         else{
             QPixmap image("C:/Users/wifi/Downloads/Criminal Pixels/Criminal Pixels/Running/prun2.png");
-            image=image.scaledToWidth(60);
-            image=image.scaledToHeight(60);
+            image=image.scaledToWidth(55);
+            image=image.scaledToHeight(55);
             setPixmap(image);
         }
         x=3;
@@ -511,8 +511,8 @@ void Player::r(){
         else
         {
             QPixmap image("C:/Users/wifi/Downloads/Criminal Pixels/Criminal Pixels/Running/prun3.png");
-            image=image.scaledToWidth(60);
-            image=image.scaledToHeight(60);
+            image=image.scaledToWidth(55);
+            image=image.scaledToHeight(55);
             setPixmap(image);
         }
         x=4;
@@ -528,8 +528,8 @@ void Player::r(){
         else
         {
             QPixmap image("C:/Users/wifi/Downloads/Criminal Pixels/Criminal Pixels/Running/prun4.png");
-            image=image.scaledToWidth(60);
-            image=image.scaledToHeight(60);
+            image=image.scaledToWidth(55);
+            image=image.scaledToHeight(55);
             setPixmap(image);
         }
         x=5;
@@ -545,8 +545,8 @@ void Player::r(){
         else
         {
             QPixmap image("C:/Users/wifi/Downloads/Criminal Pixels/Criminal Pixels/Running/prun5.png");
-            image=image.scaledToWidth(60);
-            image=image.scaledToHeight(60);
+            image=image.scaledToWidth(55);
+            image=image.scaledToHeight(55);
             setPixmap(image);
         }
         x=6;
@@ -562,8 +562,8 @@ void Player::r(){
         else
         {
             QPixmap image("C:/Users/wifi/Downloads/Criminal Pixels/Criminal Pixels/Running/prun6.png");
-            image=image.scaledToWidth(60);
-            image=image.scaledToHeight(60);
+            image=image.scaledToWidth(55);
+            image=image.scaledToHeight(55);
             setPixmap(image);
         }
         x=1;
@@ -583,8 +583,8 @@ void Player::l(){
         }
         else{
             QPixmap image("C:/Users/wifi/Downloads/Criminal Pixels/Criminal Pixels/Running/prun1.png");
-            image=image.scaledToWidth(60);
-            image=image.scaledToHeight(60);
+            image=image.scaledToWidth(55);
+            image=image.scaledToHeight(55);
             QTransform tr;
             tr.scale(-1, 1);
             image=image.transformed(tr);
@@ -605,8 +605,8 @@ void Player::l(){
         }
         else{
             QPixmap image("C:/Users/wifi/Downloads/Criminal Pixels/Criminal Pixels/Running/prun2.png");
-            image=image.scaledToWidth(60);
-            image=image.scaledToHeight(60);
+            image=image.scaledToWidth(55);
+            image=image.scaledToHeight(55);
             QTransform tr;
             tr.scale(-1, 1);
             image=image.transformed(tr);
@@ -627,8 +627,8 @@ void Player::l(){
         }
         else{
             QPixmap image("C:/Users/wifi/Downloads/Criminal Pixels/Criminal Pixels/Running/prun3.png");
-            image=image.scaledToWidth(60);
-            image=image.scaledToHeight(60);
+            image=image.scaledToWidth(55);
+            image=image.scaledToHeight(55);
             QTransform tr;
             tr.scale(-1, 1);
             image=image.transformed(tr);
@@ -649,8 +649,8 @@ void Player::l(){
         }
         else{
             QPixmap image("C:/Users/wifi/Downloads/Criminal Pixels/Criminal Pixels/Running/prun4.png");
-            image=image.scaledToWidth(60);
-            image=image.scaledToHeight(60);
+            image=image.scaledToWidth(55);
+            image=image.scaledToHeight(55);
             QTransform tr;
             tr.scale(-1, 1);
             image=image.transformed(tr);
@@ -671,8 +671,8 @@ void Player::l(){
         }
         else{
             QPixmap image("C:/Users/wifi/Downloads/Criminal Pixels/Criminal Pixels/Running/prun5.png");
-            image=image.scaledToWidth(60);
-            image=image.scaledToHeight(60);
+            image=image.scaledToWidth(55);
+            image=image.scaledToHeight(55);
             QTransform tr;
             tr.scale(-1, 1);
             image=image.transformed(tr);
@@ -693,8 +693,8 @@ void Player::l(){
             }
             else{
                 QPixmap image("C:/Users/wifi/Downloads/Criminal Pixels/Criminal Pixels/Running/prun6.png");
-                image=image.scaledToWidth(60);
-                image=image.scaledToHeight(60);
+                image=image.scaledToWidth(55);
+                image=image.scaledToHeight(55);
                 QTransform tr;
                 tr.scale(-1, 1);
                 image=image.transformed(tr);
@@ -721,8 +721,8 @@ void Player::l(){
             else
             {
                 QPixmap image ("C:/Users/wifi/Downloads/Criminal Pixels/Criminal Pixels/Attack/patt1.png");
-                image=image.scaledToWidth(60);
-                image=image.scaledToHeight(60);
+                image=image.scaledToWidth(55);
+                image=image.scaledToHeight(55);
                 setPixmap(image);
             }
             z=2;
@@ -738,8 +738,8 @@ void Player::l(){
             else
             {
                 QPixmap image ("C:/Users/wifi/Downloads/Criminal Pixels/Criminal Pixels/Attack/patt2.png");
-                image=image.scaledToWidth(60);
-                image=image.scaledToHeight(60);
+                image=image.scaledToWidth(55);
+                image=image.scaledToHeight(55);
                 setPixmap(image);
             }
             z=3;
@@ -755,8 +755,8 @@ void Player::l(){
             else
             {
                 QPixmap image ("C:/Users/wifi/Downloads/Criminal Pixels/Criminal Pixels/Attack/patt3.png");
-                image=image.scaledToWidth(60);
-                image=image.scaledToHeight(60);
+                image=image.scaledToWidth(55);
+                image=image.scaledToHeight(55);
                 setPixmap(image);
             }
             z=4;
@@ -771,8 +771,8 @@ void Player::l(){
             }
             else{
                 QPixmap image2 ("C:/Users/wifi/Downloads/Criminal Pixels/Criminal Pixels/Attack/patt4.png");
-                image2=image2.scaledToWidth(50);
-                image2=image2.scaledToHeight(50);
+                image2=image2.scaledToWidth(55);
+                image2=image2.scaledToHeight(55);
                 setPixmap(image2);
             }
             z=1;
