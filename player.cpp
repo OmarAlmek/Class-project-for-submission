@@ -62,7 +62,7 @@ Bullet *b1, Bullet *b2, Bullet *b3, Bullet *b4, Powerup* pu1, Powerup *pu2, Door
 void Player::keyPressEvent(QKeyEvent* event)
 {  QMediaPlayer *player = new QMediaPlayer;
      QAudioOutput *audioOutput = new QAudioOutput;
-
+Pair enemy2pos= {enemy2->row, enemy2->column};
     if (event->key() == Qt::Key_Up && data[row - 1][column] >= 0)
     {
 
@@ -104,7 +104,6 @@ void Player::keyPressEvent(QKeyEvent* event)
     }
     setPos(50 + column * 50, 50 + row * 50);
     Pair enemy1pos= {enemy1->row, enemy1->column};
-    Pair enemy2pos= {enemy2->row, enemy2->column};
 
     Pair pos = {row, column};
 
@@ -427,6 +426,9 @@ void Player::resetpos(){
     nopower();
     enemy1->alive = true;
     enemy2->alive = true;
+    k=0;
+    timecount = 4;
+    timecount2= 4;
 }
 
 void Player::reducecount(){

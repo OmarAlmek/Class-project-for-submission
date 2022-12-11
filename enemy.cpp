@@ -80,6 +80,8 @@ Pair Enemy1::bfs(Pair source, Pair des, int matrix[12][12]) {
     }
     pair <int ,int > ans = find(source, des, parent  );
     return ans;}
+  pair<int, int> ans = source;
+  return ans;
 }
 void Enemy1::hurt(){
     QPixmap image("C:/Users/wifi/Downloads/enhurt.png");
