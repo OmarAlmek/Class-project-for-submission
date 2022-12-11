@@ -35,9 +35,10 @@ Bullet *b1, Bullet *b2, Bullet *b3, Bullet *b4, Powerup* pu1, Powerup *pu2, Door
         //win = new WinLoss(true);
         //loss= new WinLoss(false);
         door = dr;
-        timecount =5;
+        timecount =4;
+        timecount2 = 4;
         for (int f = 0; f < 5; f++){
-            text[i]= new QGraphicsTextItem;
+            text[f]= new QGraphicsTextItem;
         }
     // Set data Array
     for (int i = 0; i < 12; i++)
@@ -117,48 +118,52 @@ void Player::keyPressEvent(QKeyEvent* event)
         for (int i = 0; i < items.size(); i++)
         {
             if (typeid(*items[i]) == typeid(Powerup)){
+                if (k ==0){
+                dt->start(1000);
+                connect(dt, SIGNAL(timeout()), this, SLOT(reducecount()));
                 scene()->removeItem(items[i]);
                 empower();
                 powerupt->start(5000);
                 powerupt->setSingleShot(true);
                 connect(powerupt,SIGNAL(timeout()),this,SLOT(nopower()));
-            }
-        }}
+                k++;}
+                else if (k==1){
+                    dt->start(1000);
+                    connect(dt, SIGNAL(timeout()), this, SLOT(reducecount2()));
+                    scene()->removeItem(items[i]);
+                    empower();
+                    powerupt->start(5000);
+                    powerupt->setSingleShot(true);
+                    connect(powerupt,SIGNAL(timeout()),this,SLOT(nopower()));}
+                }
+            }}
         //losing health when touching enemy
    { QList<QGraphicsItem*> enemies = collidingItems();
          for (int i = 0; i < enemies.size(); i++)
             {
-                if (typeid(*enemies[i]) == typeid(Enemy1) || typeid(*enemies[i])== typeid(Enemy2)){
+                if ((typeid(*enemies[i]) == typeid(Enemy1) || typeid(*enemies[i])== typeid(Enemy2)) && powered == false){
                           if (health==3)
-                               {
-                                   if(!powered)
-                                   {
+                               {        
                                        health--;
                                        sptr->removeItem(htprr3);
                                        player->setAudioOutput(audioOutput);
                                        player->setSource(QUrl::fromLocalFile("C:/Users/wifi/OneDrive/Documents/projectresourse/sound/Takedamagesound.mp3"));
                                        audioOutput->setVolume(50);
                                        player->play();
-                                   }
                                    resetpos();
                                }
 
                           else if (health == 2)
                                {
-                                   if(!powered)
-                                   {
                                        health--;
                                        sptr->removeItem(htprr2);
                                        player->setAudioOutput(audioOutput);
                                        player->setSource(QUrl::fromLocalFile("C:/Users/wifi/OneDrive/Documents/projectresourse/sound/Takedamagesound.mp3"));
                                        audioOutput->setVolume(50);
                                        player->play();
-                                   }
                                    resetpos();
                                }
                           else {
-                              if(!powered)
-                              {
                                   health--;
                                   sethealth(decreasehealth());
                                   sptr->removeItem(htprr1);
@@ -177,7 +182,6 @@ void Player::keyPressEvent(QKeyEvent* event)
                                   musicaudio->setVolume(50);
                                   music->setAudioOutput(musicaudio);
                                   music->play();
-                              }
                               this->resetpos();
                 }}
          }}
@@ -432,8 +436,23 @@ void Player::reducecount(){
     text[i]->setPos(50+11*50, 50 +13 * 50);
     text[i]->setTextWidth(50);
     timecount--;
-    if (timecount ==-1){
-        dt->stop();}
+    if (timecount == -1){
+        dt->stop();
+        sptr->removeItem(text[i]);
+        timecount = 4;
+                i++;}
+}
+void Player::reducecount2(){
+    sptr->removeItem(text[i]);
+    text[i] = sptr->addText(QString::number(timecount2));
+    text[i]->setDefaultTextColor(QColorConstants::White);
+    text[i]->setPos(50+11*50, 50 +13 * 50);
+    text[i]->setTextWidth(50);
+    timecount2--;
+    if (timecount2 == -1){
+        dt->stop();
+        sptr->removeItem(text[i]);
+}
 }
 void Player::r(){
     if (x==1){

@@ -36,7 +36,9 @@ private:
     int z=1;
     bool alive = true;
      int timecount;
+        int timecount2;
        int i=0; // for timer on bottom right of display
+       int k =0;
     Enemy1 *enemy1;
     Enemy2 *enemy2;
     Health * htprr1,* htprr2,* htprr3;
@@ -79,6 +81,7 @@ public slots:
    void resetpos();
    void shoot();
    void reducecount();
+   void reducecount2();
    void r();
    void l();
    void noshoot();
